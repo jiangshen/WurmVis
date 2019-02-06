@@ -32,7 +32,7 @@ var gradientBar = d3.select("#gradientBar")
     .style("opacity", 0.0);
 
 // Init with sampled data
-// d3.json("data.json", function(d) {
+// d3.json("data/data.json", function(d) {
 //     // return [parseFloat(d.x), parseFloat(d.y)];
 //     len = d.x.length;
 //     myarr = []
@@ -71,7 +71,7 @@ gradientBar.append("rect")
     .style("fill", "url(#linear-gradient)");
 
 // First run
-d3.json("data1.json", function(d) {
+d3.json("data/data1.json", function(d) {
     len = d.data.length;
     for (i = 0; i < len; i++) {
         myarr.push([d.data[i].x, d.data[i].y, d.data[i].strain, d.data[i].link]);
@@ -102,7 +102,7 @@ function heatmapButtonCall() {
         //     .style("opacity", 0).remove();
 
         // Read in Data and Create heatmap
-        d3.csv("data2.csv", function(d) {
+        d3.csv("data/data2.csv", function(d) {
             d.x = +d.x;
             d.y = +d.y;
             return d;
@@ -120,7 +120,7 @@ function heatmapButtonCall() {
 }
 
 function updateButtonCall() {
-    d3.csv("data.csv", function(d) {
+    d3.csv("data/data.csv", function(d) {
         return [parseFloat(d.x), parseFloat(d.y)];
     }
     ,function(_, data) {
