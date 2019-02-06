@@ -1,0 +1,46 @@
+<html>
+
+    <head>
+        <title>Wurm</title>
+        <!-- Include any styles we want to add to our page -->
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="topbar">
+            <span class="topbar-title">Wurm</span>
+            <button name="updateButton" class="button button_red" onclick="updateButtonCall()">New Sample</button>
+            <button name="scatterButton" class="button button_green" onclick="scatterButtonCall()">Scatter</button>
+            <button name="heatmapButton" class="button button_orange" onclick="heatmapButtonCall()">Heatmap</button>
+            <span class="separator"> | </span>
+            <button name="n1Button" class="button button_violet" onclick="n1ButtonCall()">N1</button>
+            <button name="n2Button" class="button button_violet" onclick="n2ButtonCall()">N2</button>
+            <button name="clearButton" class="button button_violet" onclick="clearButtonCall()">Clear</button>
+            <span class="data-description"></span>
+            <br />
+            <span class="data-minmax"></span>
+            <svg id="gradientBar" width="450" height="10"></svg>
+        </div>
+        
+        <div class="containerH" style="margin-left:8px; margin-bottom: 8px; margin-right: 8px">
+            <div id="chart"></div>
+            <div id="infobox" class="containerV">
+                <div id="infobox-top">
+                    <span style="position: absolute; bottom: 0px; margin: 16px; color: white; font-size: 24px;">Information</span>
+                </div>
+                <div id="infobox-content">
+                    <span class="info-xy" id="infobox-xy">Select a point to view its information</span><br><hr>
+                    <span class="info-xy" id="infobox-strain"></span><br><hr>
+                    <span class="info-xy" id="infobox-link"></span><br><br>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Always include D3 first. -->
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-contour.v1.min.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+        <!-- Include main.js, which is where all our code lives -->
+        <script src="app.js"></script>
+    </body>
+</html>
