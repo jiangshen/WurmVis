@@ -45,26 +45,19 @@ function updateButtonCall() {
     });
 }
 
-function n1ButtonCall() {
-    clearButtonCall();
-    d3.selectAll('.N1')
+function strainButtonCall(strain) {
+    d3.selectAll('circle')
         .transition()
         .ease(d3.easePoly)
-        .duration(250)
-        .attr("fill", "#8F5E99")
-        .attr("r", 10)
-        .transition()
-        .attr("r", 5);
-}
+        .duration(200)
+        .attr("fill", BLUE_COLOR);
 
-function n2ButtonCall() {
-    clearButtonCall();
-    d3.selectAll('.N2')
+    d3.selectAll('.' + strain)
         .transition()
         .ease(d3.easePoly)
-        .duration(250)
-        .attr("fill", "#8F5E99")
-        .attr("r", 10)
+        .duration(200)
+        .attr("fill", PURPLE_COLOR)
+        .attr("r", 8)
         .transition()
         .attr("r", 5);
 }
@@ -73,6 +66,9 @@ function clearButtonCall() {
     d3.selectAll('circle')
         .transition()
         .ease(d3.easePoly)
-        .duration(250)
-        .attr("fill", "#3498DB")
+        .duration(200)
+        .attr("fill", BLUE_COLOR)
+        .attr("r", 8)
+        .transition()
+        .attr("r", 5);
 }

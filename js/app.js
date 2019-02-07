@@ -6,17 +6,14 @@ gradientBar.append("rect")
     .attr("height", legendH)
     .style("fill", "url(#linear-gradient)");
 
-// d3.json("data/data1.json", function(d) {
-//     len = d.data.length;
-//     for (i = 0; i < len; i++) {
-//         myarr.push([d.data[i].x, d.data[i].y, d.data[i].strain, d.data[i].link]);
-//     }
-//     // console.log(myarr);
-//     // initChart(myarr);
-// });
-
 /* Init with scatterplot */
 d3.json(SCATTER_PATH, function(d) {
+    d3.map(d.data, function(d){ return d.strain; }).keys().forEach(strain => {
+        strainContainer.append("button")
+            .attr("class", "button button_violet")
+            .attr("onclick", "strainButtonCall('" + strain + "')")
+            .text(strain);
+    });
     initChart(d.data);
 });
 	
@@ -49,13 +46,13 @@ function initChart(dataset) {
 
     //Create circles
     svg.append("g") //Create new g
-        .attr("id", "circles") //Assign ID of 'circles'
+        .attr("id", "circles")
         .attr("clip-path", "url(#chart-area)") //Add reference to clipPath
         .selectAll("circle")
         .data(dataset)
         .enter()
         .append("circle")
-        .attr("fill", "#3498DB")
+        .attr("fill", BLUE_COLOR)
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
         .attr("r", 5)
@@ -81,7 +78,7 @@ function initChart(dataset) {
                 .style('background', '#f44336');
             d3.select("#infobox-xy")
                 .text("Select a point to view its information");
-                // .style("fill", "#3498DB");
+                // .style("fill", BLUE_COLOR);
         })
         .on('click', function(d, i) {
             d3.select("#infobox-xy")
@@ -95,7 +92,7 @@ function initChart(dataset) {
                 .transition()
                 .ease(d3.easePoly)
                 .duration(300)
-                .style('background', '#3498DB');
+                .style('background', BLUE_COLOR);
         });
 
     //Create X axis
@@ -149,7 +146,7 @@ function createScatter(dataset) {
         .data(dataset)
         .enter()
         .append("circle")
-        .attr("fill", "#3498DB")
+        .attr("fill", BLUE_COLOR)
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
         .attr("class", function(d) { return d.strain; })
@@ -175,7 +172,7 @@ function createScatter(dataset) {
                 .style('background', '#f44336');
             d3.select("#infobox-xy")
                 .text("Select a point to view its information");
-                // .style("fill", "#3498DB");
+                // .style("fill", BLUE_COLOR);
         })
         .on('click', function(d, i) {
             d3.select("#infobox-xy")
@@ -189,7 +186,7 @@ function createScatter(dataset) {
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .style('background', '#3498DB');
+                .style('background', BLUE_COLOR);
         });
 
     d3.select("#circles")
@@ -235,7 +232,7 @@ function createHeatmap(all_data) {
         .style("opacity", 0.0)
         .attr("id", "heatmap")
         .attr("fill", "none")
-        .attr("stroke", "#5D6D7E")
+        .attr("stroke", SLATE_COLOR)
         .attr("stroke-width", 0.25)
         .attr("stroke-linejoin", "round")
         .selectAll("path")
@@ -314,7 +311,7 @@ function updateScatter(dataset) {
             .transition()
             .ease(d3.easePoly)
             .duration(250)
-            .attr("fill", "#3498DB")
+            .attr("fill", BLUE_COLOR)
             .attr("r", 5);
         });
 }

@@ -8,13 +8,13 @@
     <body>
         <div class="topbar">
             <span class="topbar-title">Wurm</span>
-            <button name="updateButton" class="button button_red" onclick="updateButtonCall()">New Sample</button>
-            <button name="scatterButton" class="button button_green" onclick="scatterButtonCall()">Scatter</button>
-            <button name="heatmapButton" class="button button_orange" onclick="heatmapButtonCall()">Heatmap</button>
+            <button class="button button_red" onclick="updateButtonCall()">New Sample</button>
+            <button class="button button_green" onclick="scatterButtonCall()">Scatter</button>
+            <button class="button button_orange" onclick="heatmapButtonCall()">Heatmap</button>
             <span class="separator"> | </span>
-            <button name="n1Button" class="button button_violet" onclick="n1ButtonCall()">N1</button>
-            <button name="n2Button" class="button button_violet" onclick="n2ButtonCall()">N2</button>
-            <button name="clearButton" class="button button_violet" onclick="clearButtonCall()">Clear</button>
+            <span id="strainContainer">
+                <button class="button button_violet" onclick="clearButtonCall()">All Strains</button>
+            </span>
             <span class="data-description"></span>
             <br />
             <span class="data-minmax"></span>

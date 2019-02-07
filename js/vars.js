@@ -1,5 +1,5 @@
 /* Paths */
-const SCATTER_PATH = "/data/data1.json";
+const SCATTER_PATH = "/data/data.json";
 const HEATMAP_PATH = "/data/data2.csv";
 
 /* Dimensions */
@@ -9,6 +9,11 @@ var padding = 30;
 const legendW = 450;
 const legendH = 10;
 var margin = {top: 20, right: 30, bottom: 30, left: 40};
+
+/* Colors */
+const SLATE_COLOR = "#5D6D7E"
+const BLUE_COLOR = "#3498DB";
+const PURPLE_COLOR = "#8F5E99";
 
 // Sample Size
 var sampleSize = 350;
@@ -25,11 +30,13 @@ var xAxis, yAxis;
 /* Heatmap Color Range */
 var color = d3.scaleSequential(d3.interpolateBuPu);
 
-/* SVG elements */
+/* Elements */
 var svg = d3.select("#chart")
 	.append("svg")
 	.attr("width", w)
     .attr("height", h);
+
+var strainContainer = d3.select("#strainContainer");
 
 var gradientBar = d3.select("#gradientBar")
     .style("opacity", 0.0);
