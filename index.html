@@ -9,18 +9,17 @@
         <div class="topbar">
             <span class="topbar-title">Wurm</span>
             <button class="button button_red" onclick="updateButtonCall()">New Sample</button>
-            <button class="button button_green" onclick="scatterButtonCall()">Scatter</button>
-            <button class="button button_orange" onclick="heatmapButtonCall()">Heatmap</button>
+            <button class="button button_green" onclick="scatterButtonCall()"><span id="scatter-text">&#x2714 Scatter</span></button>
+            <button class="button button_orange" onclick="heatmapButtonCall()"><span id="heatmap-text">Heatmap</span></button>
             <span class="separator"> | </span>
             <span id="strainContainer">
                 <button class="button button_violet" onclick="clearButtonCall()">All Strains</button>
             </span>
-            <span class="data-description"></span>
             <br />
-            <span class="data-minmax"></span>
+            <span class="data-description"></span><span class="data-minmax"></span>
             <svg id="gradientBar" width="450" height="10"></svg>
         </div>
-        
+
         <div class="containerH" style="margin-left:8px; margin-bottom: 8px; margin-right: 8px">
             <div id="chart"></div>
             <div id="infobox" class="containerV">

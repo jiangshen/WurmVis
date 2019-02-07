@@ -1,6 +1,7 @@
 /* body color #F0F3F4
 medium gray #5D6D7E 
-steel blue #4292C6 */
+steel blue #4292C6 
+top bar grey original #4A5764 */
 
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -33,14 +34,13 @@ hr {
 
 .data-minmax {
     color: #ffffff;
-    margin-left: 10px;
     font-size: 12px;
 }
 
 .data-description {
     color: #ffffff;
-    margin-left: 8px;
-    font-size: 20px;
+    margin-left: 10px;
+    font-size: 12px;
 }
 
 .topbar-title {
@@ -62,6 +62,11 @@ div #infobox-content {
 
 .info-xy {
     color: #5D6D7E;
+}
+
+div #scatter-text {
+    font-weight: bold;
+    font-variant: small-caps;
 }
 
 div #infobox {

@@ -30,7 +30,7 @@ function initChart(dataset) {
         .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
 
     d3.select("body").select("div.topbar").select("span.data-description")
-        .text(dataset.length + " Data Points");
+        .text(dataset.length + " Data Points | ");
 
     xAxis = d3.axisBottom(xScale).ticks(5);
     yAxis = d3.axisLeft(yScale).ticks(5);
@@ -117,7 +117,7 @@ function createScatter(dataset) {
     d3.select("body").select("div.topbar").select("span.data-minmax")
         .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
     d3.select("body").select("div.topbar").select("span.data-description")
-        .text(dataset.length + " Data Points");
+        .text(dataset.length + " Data Points | ");
 
     // Update Scale domains
     xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
@@ -208,7 +208,7 @@ function createHeatmap(all_data) {
     d3.select("body").select("div.topbar").select("span.data-minmax")
         .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
     d3.select("body").select("div.topbar").select("span.data-description")
-        .text(all_data.length + " Data Points");
+        .text(all_data.length + " Data Points | ");
 
     // Update Scale domains
     xScale.domain(d3.extent(all_data, function(d) { return d.x;})).nice();
@@ -269,7 +269,7 @@ function updateScatter(dataset) {
         .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
 
     d3.select("body").select("div.topbar").select("span.data-description")
-        .text(dataset.length + " Data Points");
+        .text(dataset.length + " Data Points | ");
 
     // Update Scale domains
     xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();

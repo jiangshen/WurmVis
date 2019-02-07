@@ -11,6 +11,8 @@ const legendH = 10;
 var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
 /* Colors */
+const RED_COLOR = "#F44336";
+const ORANGE_COLOR = "#FF9919";
 const SLATE_COLOR = "#5D6D7E"
 const BLUE_COLOR = "#3498DB";
 const PURPLE_COLOR = "#8F5E99";
