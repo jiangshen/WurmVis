@@ -90,7 +90,7 @@ function clearButtonCall() {
         .ease(d3.easePoly)
         .duration(200)
         .attr("fill", BLUE_COLOR)
-        .attr("r", 80)
+        .attr("r", 8)
         .transition()
         .attr("r", 5);
 }
