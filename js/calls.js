@@ -13,10 +13,11 @@ function scatterButtonCall() {
             .style("font-variant", "normal")
             .text("Heatmap");
 
+        createScatter(sampled_data);
         /* Create Scatter */
-        d3.json(SCATTER_PATH, function(d) {
-            createScatter(d.data);
-        });
+        // d3.json(SCATTER_PATH, function(d) {
+        //     createScatter(sample(d, SAMPLE_SIZE));
+        // });
         currState = "scatter";
     }
 }
@@ -35,36 +36,37 @@ function heatmapButtonCall() {
             .style("font-variant", "normal")
             .text("Scatter");
 
+        d3.select("#topbar_line")
+            .append('svg')
+            .attr("fill", ORANGE_COLOR);
+        gradientBar.transition()
+            .ease(d3.easePoly)
+            .duration(750)
+            .style("opacity", 1.0);
+
+        if (IS_SAMPLING_HEATMAP) {
+            createHeatmap(sampled_data);
+        } else {
+            createHeatmap(all_data);
+        }
+        
         /* Read in Data and Create heatmap */
-        d3.csv(HEATMAP_PATH, function(d) {
-            d.forEach(function(d) {
-                d['x'] = +d.x;
-                d['y'] = +d.y;
-            });
-
-            d3.select("#topbar_line")
-                .append('svg')
-                .attr("fill", ORANGE_COLOR);
-
-            gradientBar.transition()
-                .ease(d3.easePoly)
-                .duration(750)
-                .style("opacity", 1.0);
-            createHeatmap(d);
-            currState = "heatmap";
-        });
+        // d3.json(HEATMAP_PATH, function(d) {
+        //     // d.forEach(function(d) {
+        //     //     d['x'] = +d.x;
+        //     //     d['y'] = +d.y;
+        //     // });
+        //     createHeatmap(sample(d, HM_SAMPLE_SIZE));
+        // });
+        currState = "heatmap";
     }
 }
 
 function updateButtonCall() {
-    d3.csv("data/data.csv", function(d) {
-        d.forEach(function(d) {
-            d['x'] = +d.x;
-            d['y'] = +d.y;
-        });
-        d = sample(d, sampleSize);
-        updateScatter(d);
-    });
+    if (currState == "scatter") {
+        sampled_data = sample(all_data, SAMPLE_SIZE);
+        updateScatter(sampled_data);
+    }
 }
 
 function strainButtonCall(strain) {

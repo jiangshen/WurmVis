@@ -1,6 +1,12 @@
 /* Paths */
-const SCATTER_PATH = "/data/data.json";
-const HEATMAP_PATH = "/data/data2.csv";
+const SCATTER_PATH = "/data/all.json";
+const HEATMAP_PATH = "/data/all.json";
+
+/* Sampling */
+const SAMPLE_SIZE = 500;
+var IS_SAMPLING_HEATMAP = true;
+var all_data;
+var sampled_data;
 
 /* Dimensions */
 const w = 1000;
@@ -10,15 +16,16 @@ const legendW = 450;
 const legendH = 10;
 var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
+const CIRCLE_RADIUS_NORMAL = 3;
+const CIRCLE_RADIUS_HOVER = 5;
+
 /* Colors */
+const TRANSPARENT_COLOR = "#ffffff00"
 const RED_COLOR = "#F44336";
 const ORANGE_COLOR = "#FF9919";
 const SLATE_COLOR = "#5D6D7E"
 const BLUE_COLOR = "#3498DB";
 const PURPLE_COLOR = "#8F5E99";
-
-// Sample Size
-var sampleSize = 350;
 
 var xmin, ymin, xmax, ymax;
 

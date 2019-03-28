@@ -8,13 +8,33 @@ gradientBar.append("rect")
 
 /* Init with scatterplot */
 d3.json(SCATTER_PATH, function(d) {
-    d3.map(d.data, function(d){ return d.strain; }).keys().forEach(strain => {
-        strainContainer.append("button")
-            .attr("class", "button button_violet")
-            .attr("onclick", "strainButtonCall('" + strain + "')")
-            .text(strain);
-    });
-    initChart(d.data);
+
+    /**
+     * Takes Strain info 
+     */
+    // d3.map(d.data, function(d){ return d.strain; }).keys().forEach(strain => {
+    //     strainContainer.append("button")
+    //         .attr("class", "button button_violet")
+    //         .attr("onclick", "strainButtonCall('" + strain + "')")
+    //         .text(strain);
+    // });
+
+
+    // !! Temp D3 Getting Strain Distributions
+    // var strainCount = d3.nest()
+    //     .key(function(d) {return d.strain;})
+    //     .rollup(function(v) {return v.length;})
+    //     .entries(d.data);
+    // console.log(strainCount);
+    // initChart(d.data);
+    all_data = d;
+    sampled_data = sample(d, SAMPLE_SIZE);
+    initChart(sampled_data);
+    d3.select("#ripple")
+        .transition()
+        .ease(d3.easePoly)
+        .duration(250)
+        .style("opacity", 0.0);
 });
 	
 function initChart(dataset) {
@@ -52,17 +72,19 @@ function initChart(dataset) {
         .data(dataset)
         .enter()
         .append("circle")
-        .attr("fill", BLUE_COLOR)
+        .attr("fill", TRANSPARENT_COLOR)
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
-        .attr("r", 5)
+        .attr("r", CIRCLE_RADIUS_NORMAL)
+        .attr("stroke", BLUE_COLOR)
+        .attr("stroke-width", 1)
         .attr("class", function(d) { return d.strain; })
         .on('mouseover', function(d, i) {
             d3.select(this)
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", 10);
+                .attr("r", CIRCLE_RADIUS_HOVER);
                 // .style("fill", "deeppink");
         })
         .on('mouseout', function(d, i) {
@@ -70,7 +92,7 @@ function initChart(dataset) {
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", 5);
+                .attr("r", CIRCLE_RADIUS_NORMAL);
             d3.select("#infobox-top")
                 .transition()
                 .ease(d3.easePoly)
@@ -146,17 +168,19 @@ function createScatter(dataset) {
         .data(dataset)
         .enter()
         .append("circle")
-        .attr("fill", BLUE_COLOR)
+        .attr("fill", TRANSPARENT_COLOR)
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
         .attr("class", function(d) { return d.strain; })
-        .attr("r", 5)
+        .attr("r", CIRCLE_RADIUS_NORMAL)
+        .attr("stroke", BLUE_COLOR)
+        .attr("stroke-width", 1)
         .on('mouseover', function(d, i) {
             d3.select(this)
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", 10);
+                .attr("r", CIRCLE_RADIUS_HOVER);
                 // .style("fill", "deeppink");
         })
         .on('mouseout', function(d, i) {
@@ -164,7 +188,7 @@ function createScatter(dataset) {
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", 5);
+                .attr("r", CIRCLE_RADIUS_NORMAL);
             d3.select("#infobox-top")
                 .transition()
                 .ease(d3.easePoly)
@@ -295,10 +319,10 @@ function updateScatter(dataset) {
         .transition()
         .ease(d3.easePoly)
         .duration(500)
-        .each("start", function() { // <-- Executes at start of transition
+        .on("start", function() {
             d3.select(this)
-            .attr("fill", "deeppink")
-            .attr("r", 6.5);
+            .attr("stroke", "deeppink")
+            .attr("r", CIRCLE_RADIUS_HOVER);
         })
         .attr("cx", function(d) {
             return xScale(d.x);
@@ -306,17 +330,18 @@ function updateScatter(dataset) {
         .attr("cy", function(d) {
             return yScale(d.y);
         })
-        .each("end", function() { // <-- Executes at end of transition
+        .on("end", function() {
             d3.select(this)
             .transition()
             .ease(d3.easePoly)
             .duration(250)
-            .attr("fill", BLUE_COLOR)
-            .attr("r", 5);
+            .attr("r", CIRCLE_RADIUS_NORMAL)
+            .attr("stroke", BLUE_COLOR)
         });
 }
 
 function sample(arr, size) {
+    if (size == -1) return arr;
     var shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
     while (i --> min) {
         index = Math.floor((i + 1) * Math.random());
