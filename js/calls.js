@@ -15,7 +15,7 @@ function scatterButtonCall() {
 
         createScatter(sampled_data);
         /* Create Scatter */
-        // d3.json(SCATTER_PATH, function(d) {
+        // d3.json(DATA_PATH, function(d) {
         //     createScatter(sample(d, SAMPLE_SIZE));
         // });
         currState = "scatter";
@@ -51,7 +51,7 @@ function heatmapButtonCall() {
         }
         
         /* Read in Data and Create heatmap */
-        // d3.json(HEATMAP_PATH, function(d) {
+        // d3.json(DATA_PATH, function(d) {
         //     // d.forEach(function(d) {
         //     //     d['x'] = +d.x;
         //     //     d['y'] = +d.y;

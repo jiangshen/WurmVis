@@ -1,6 +1,5 @@
 /* Paths */
-const SCATTER_PATH = "/data/all.json";
-const HEATMAP_PATH = "/data/all.json";
+const DATA_PATH = "/data/all.json";
 
 /* Sampling */
 const SAMPLE_SIZE = 500;
@@ -26,6 +25,7 @@ const ORANGE_COLOR = "#FF9919";
 const SLATE_COLOR = "#5D6D7E"
 const BLUE_COLOR = "#3498DB";
 const PURPLE_COLOR = "#8F5E99";
+const DEEPPINK_COLOR = "#FF1493";
 
 var xmin, ymin, xmax, ymax;
 

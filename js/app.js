@@ -7,7 +7,7 @@ gradientBar.append("rect")
     .style("fill", "url(#linear-gradient)");
 
 /* Init with scatterplot */
-d3.json(SCATTER_PATH, function(d) {
+d3.json(DATA_PATH, function(d) {
 
     /**
      * Takes Strain info 
@@ -29,6 +29,15 @@ d3.json(SCATTER_PATH, function(d) {
     // initChart(d.data);
     all_data = d;
     sampled_data = sample(d, SAMPLE_SIZE);
+    // d3.map(all_data, function(d) {
+    //     return d.o;
+    // })
+    // .keys()
+    // .forEach(o => {
+    //     alert(o);
+    // })
+    console.log(sampled_data);
+
     initChart(sampled_data);
     d3.select("#ripple")
         .transition()
@@ -334,7 +343,7 @@ function updateScatter(dataset) {
             d3.select(this)
             .transition()
             .ease(d3.easePoly)
-            .duration(250)
+            .duration(350)
             .attr("r", CIRCLE_RADIUS_NORMAL)
             .attr("stroke", BLUE_COLOR)
         });
