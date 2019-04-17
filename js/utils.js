@@ -2,6 +2,7 @@
  * Uniformly samples a data array
  * @param {Object[]} arr The data array to be sampled
  * @param {number} size Sampling size
+ * @returns {Object[]} The sampled data array
  */
 function sample(arr, size) {
     if (size == -1) return arr;
@@ -18,6 +19,7 @@ function sample(arr, size) {
 /**
  * Format data, removing special characters and make it more readable
  * @param {string} s Text to be formatted
+ * @returns {string} Formatted string
  */
 function formatText(s) {
     s = s.replace(/-/, ' ');
@@ -32,6 +34,7 @@ function formatText(s) {
  * @param {number} starttime Time the video plays
  * @param {boolean} autoplay Toggle autoplay
  * @param {boolean} fullscreen Toggle fullscreen
+ * @returns {string} Generated HTML code
  */
 function generateVideoEmbed(w, h, uid, starttime, autoplay, fullscreen) {
     return '<iframe width="' + w +

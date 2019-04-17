@@ -1,4 +1,4 @@
-/* Paths */
+/* Data Path */
 const DATA_PATH = "/data/all.json";
 
 /* Sampling */
@@ -31,16 +31,17 @@ const BLUE_COLOR = "#3498DB";
 const PURPLE_COLOR = "#8F5E99";
 const DEEPPINK_COLOR = "#FF1493";
 
+/* Elements */
+var svg = d3.select('#chart');
+var scatter_bar = d3.select('#scatter-bar');
+var gradientBar = d3.select('#gradient-bar').style('opacity', 0.0);
+
+/* Variables */
 var xmin, ymin, xmax, ymax;
 var prev_time_percentage = 0;
-
-/* Elements */
-var svg = d3.select("#chart")
-	.append("svg")
-	.attr("width", w)
-    .attr("height", h);
-var scatter_bar = d3.select('#scatter-bar');
 var scatter_bar_width = scatter_bar.style('width').slice(0, -2);
+var currState = "scatter";
+var currCircle;
 
 /* D3 Scales */
 var xScale = d3.scaleLinear().rangeRound([padding, w - padding * 2]);	
@@ -56,22 +57,17 @@ var genderContainer = d3.select("#genderContainer");
 var environmentContainer = d3.select("#environmentContainer");
 var optogeneticsContainer = d3.select("#optogeneticsContainer");
 
-var gradientBar = d3.select("#gradientBar")
-    .style("opacity", 0.0);
-
 /* Gradient Definition */
-
-var defs = svg.append("defs");
-var linearGradient = defs.append("linearGradient")
-    .attr("id", "linear-gradient")
-    .attr("x1", "0%")
-    .attr("y1", "0%")
-    .attr("x2", "100%")
-    .attr("y2", "0%");
-
+var defs = svg.append('defs');
+var linearGradient = defs.append('linearGradient')
+    .attr('id', 'linear-gradient')
+    .attr('x1', '0%')
+    .attr('y1', '100%')
+    .attr('x2', "0%")
+    .attr('y2', "0%");
 var gradient_granularity = 50;
 for (i = 0; i <= gradient_granularity; i++) {
-    linearGradient.append("stop")
-        .attr("offset", i / gradient_granularity)
-        .attr("stop-color", color(i / gradient_granularity));
+    linearGradient.append('stop')
+        .attr('offset', i / gradient_granularity)
+        .attr('stop-color', color(i / gradient_granularity));
 }

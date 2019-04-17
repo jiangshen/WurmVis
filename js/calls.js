@@ -14,11 +14,7 @@ function scatterButtonCall() {
             .style("font-variant", "normal")
             .text("Heatmap");
 
-        createScatter(sampled_data);
-        /* Create Scatter */
-        // d3.json(DATA_PATH, function(d) {
-        //     createScatter(sample(d, SAMPLE_SIZE));
-        // });
+        redrawScatter(sampled_data);
         currState = "scatter";
     }
 }
@@ -47,19 +43,10 @@ function heatmapButtonCall() {
             .style("opacity", 1.0);
 
         if (IS_SAMPLING_HEATMAP) {
-            createHeatmap(sampled_data);
+            redrawHeatmap(sampled_data);
         } else {
-            createHeatmap(all_data);
+            redrawHeatmap(all_data);
         }
-        
-        /* Read in Data and Create heatmap */
-        // d3.json(DATA_PATH, function(d) {
-        //     // d.forEach(function(d) {
-        //     //     d['x'] = +d.x;
-        //     //     d['y'] = +d.y;
-        //     // });
-        //     createHeatmap(sample(d, HM_SAMPLE_SIZE));
-        // });
         currState = "heatmap";
     }
 }
@@ -76,23 +63,6 @@ function updateButtonCall() {
         updateScatter(sampled_data);
     }
 }
-
-// function strainButtonCall(strain) {
-//     d3.selectAll('circle')
-//         .transition()
-//         .ease(d3.easePoly)
-//         .duration(200)
-//         .attr("fill", BLUE_COLOR);
-
-//     d3.selectAll('.' + strain)
-//         .transition()
-//         .ease(d3.easePoly)
-//         .duration(200)
-//         .attr("fill", PURPLE_COLOR)
-//         .attr("r", 8)
-//         .transition()
-//         .attr("r", 5);
-// }
 
 function selectionCall() {
     var g = genderContainer.property('value');
@@ -125,10 +95,7 @@ function selectionCall() {
             .attr("r", CIRCLE_RADIUS_HOVER)
             .transition()
             .attr("r", CIRCLE_RADIUS_NORMAL);
-
-        d3.select("body").select("div.topbar").select("span.data-description")
-            .text("0 Data Points | This is " + size/SAMPLE_SIZE * 100 + "% of the population | ");
-        
+                    
         // alert("Selected: " + selection + ". This is " + size/SAMPLE_SIZE * 100 + "% of the population");
 
     } else {
@@ -140,6 +107,9 @@ function selectionCall() {
  * Clears Scatterplot selection
  */
 function clearButtonCall() {
+    genderContainer.node().selectedIndex = 0;
+    environmentContainer.node().selectedIndex = 0;
+    optogeneticsContainer.node().selectedIndex = 0;
     d3.selectAll('circle')
         .transition()
         .ease(d3.easePoly)

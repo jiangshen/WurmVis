@@ -1,11 +1,3 @@
-var currState = "scatter";
-
-gradientBar.append("rect")
-    .attr("class", "legend")
-    .attr("width", legendW)
-    .attr("height", legendH)
-    .style("fill", "url(#linear-gradient)");
-
 /* Init with scatterplot */
 d3.json(DATA_PATH, function(d) {
 
@@ -24,8 +16,7 @@ d3.json(DATA_PATH, function(d) {
     //     .key(function(d) {return d.strain;})
     //     .rollup(function(v) {return v.length;})
     //     .entries(d.data);
-    // console.log(strainCount);
-    // initChart(d.data);
+
     all_data = d;
     sampled_data = sample(d, SAMPLE_SIZE);
 
@@ -47,50 +38,50 @@ d3.json(DATA_PATH, function(d) {
             .attr("value", optogenetics)
             .text(formatText(optogenetics));
     });
-
     SAMPLED_XMIN = d3.min(sampled_data, function(d) { return d.x });
     SAMPLED_XMAX = d3.max(sampled_data, function(d) { return d.x });
     SAMPLED_YMIN = d3.min(sampled_data, function(d) { return d.y });
     SAMPLED_YMAX = d3.max(sampled_data, function(d) { return d.y });
-    initChart(sampled_data);
-    d3.select("#ripple")
+    d3.select('#ripple')
         .transition()
         .ease(d3.easePoly)
         .duration(250)
         .style("opacity", 0.0);
+    d3.select("#ripple").remove().exit();
+    svg.style('display', 'block');
+    svg.transition()
+        .ease(d3.easePoly)
+        .duration(250)
+        .style('opacity', 1.0);
+    initScatter(sampled_data);
 });
-	
-function initChart(dataset) {
-    xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
-    yScale.domain(d3.extent(dataset, function (d) { return d.y; })).nice();
 
+function initScatter(dataset) {
     xmin = d3.min(dataset, function(d) { return d.x });
     xmax = d3.max(dataset, function(d) { return d.x });
     ymin = d3.min(dataset, function(d) { return d.y });
     ymax = d3.max(dataset, function(d) { return d.y });
 
-    d3.select("body").select("div.topbar").select("span.data-minmax")
-        .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
+    d3.select('#data-points').text(dataset.length + ' Data Points');
+    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
+    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
+    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
+    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
 
-    d3.select("body").select("div.topbar").select("span.data-description")
-        .text(dataset.length + " Data Points | ");
+    d3.select('#bottom-bar')
+        .transition()
+        .ease(d3.easePoly)
+        .duration(250)
+        .style('height', '20px');
 
+    xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
+    yScale.domain(d3.extent(dataset, function (d) { return d.y; })).nice();
     xAxis = d3.axisBottom(xScale).ticks(5);
     yAxis = d3.axisLeft(yScale).ticks(5);
 
-    //Define clipping path
-    // svg.append("clipPath") //Make a new clipPath
-    //     .attr("id", "chart-area") //Assign an ID
-    //     .append("rect") //Within the clipPath, create a new rect
-    //     .attr("x", padding) //Set rect's position and size…
-    //     .attr("y", padding)
-    //     .attr("width", w - padding * 3)
-    //     .attr("height", h - padding * 2);
-
-    //Create circles
-    svg.append("g") //Create new g
+    /* Create circles */
+    svg.append("g")
         .attr("id", "circles")
-        .attr("clip-path", "url(#chart-area)") //Add reference to clipPath
         .selectAll("circle")
         .data(dataset)
         .enter()
@@ -101,7 +92,7 @@ function initChart(dataset) {
         .attr("r", CIRCLE_RADIUS_NORMAL)
         .attr("stroke", BLUE_COLOR)
         .attr("stroke-width", 1)
-        .attr("class", function(d) { 
+        .attr("class", function(d) {
             return d.g + ' ' + d.e + ' ' + d.o; 
         })
         .on('mouseover', function(d, i) {
@@ -110,7 +101,6 @@ function initChart(dataset) {
                 .ease(d3.easePoly)
                 .duration(250)
                 .attr("r", CIRCLE_RADIUS_HOVER);
-                // .style("fill", "deeppink");
         })
         .on('mouseout', function(d, i) {
             d3.select(this)
@@ -125,18 +115,15 @@ function initChart(dataset) {
                 .style('background', '#f44336');
             d3.select("#infobox-xy")
                 .text("Select a point to view its information");
-                // .style("fill", BLUE_COLOR);
         })
         .on('click', function(d, i) {
             d3.select("#infobox-xy")
                 .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
-
             d3.select('#time-bar')
                 .transition()
                 .ease(d3.easePoly)
                 .duration(750)
                 .style('width', Math.round(d.t / d.d * 100) + '%');
-
             d3.select("#infobox-gender")
                 .text("Gender: " + formatText(d.g));
             d3.select("#infobox-environment")
@@ -152,39 +139,51 @@ function initChart(dataset) {
                 .attr("r", CIRCLE_RADIUS_HOVER)
                 .attr("stroke", DEEPPINK_COLOR)
                 .attr("stroke-width", 2);
-            
-            // alert(d.t / d.d);
+            if (currCircle != null) {
+                currCircle
+                    .transition()
+                    .ease(d3.easePoly)
+                    .duration(200)
+                    .attr("stroke", BLUE_COLOR)
+                    .attr("stroke-width", 1)
+                    .attr("r", CIRCLE_RADIUS_SMALL)
+                    .transition()
+                    .attr("r", CIRCLE_RADIUS_NORMAL)
+            }
 
             d3.select("#infobox-top")
                 .transition()
                 .ease(d3.easePoly)
                 .duration(300)
                 .style('background', BLUE_COLOR);
+
+            currCircle = d3.select(this);
         });
 
-    //Create X axis
+    /* Create x-axis */
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + (h - padding) + ")")
         .call(xAxis);
 
-    //Create Y axis
+    /* Create y-axis */
     svg.append("g")
         .attr("class", "y axis")
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
 }
 
-function createScatter(dataset) {
+function redrawScatter(dataset) {
     xmin = d3.min(dataset, function(d) { return d.x });
     xmax = d3.max(dataset, function(d) { return d.x });
     ymin = d3.min(dataset, function(d) { return d.y });
     ymax = d3.max(dataset, function(d) { return d.y });
 
-    d3.select("body").select("div.topbar").select("span.data-minmax")
-        .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
-    d3.select("body").select("div.topbar").select("span.data-description")
-        .text(dataset.length + " Data Points | ");
+    d3.select('#data-points').text(dataset.length + ' Data Points');
+    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
+    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
+    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
+    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
 
     // Update Scale domains
     xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
@@ -208,7 +207,6 @@ function createScatter(dataset) {
     svg.append("g")
         .style("opacity", 0.0)
         .attr("id", "circles")
-        .attr("clip-path", "url(#chart-area)") //Add reference to clipPath
         .selectAll("circle")
         .data(dataset)
         .enter()
@@ -220,6 +218,9 @@ function createScatter(dataset) {
         .attr("r", CIRCLE_RADIUS_NORMAL)
         .attr("stroke", BLUE_COLOR)
         .attr("stroke-width", 1)
+        .attr("class", function(d) {
+            return d.g + ' ' + d.e + ' ' + d.o; 
+        })
         .on('mouseover', function(d, i) {
             d3.select(this)
                 .transition()
@@ -245,22 +246,45 @@ function createScatter(dataset) {
         .on('click', function(d, i) {
             d3.select("#infobox-xy")
                 .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
-            d3.select("#infobox-time")
-                .text("Time: " + d.t);
+            d3.select('#time-bar')
+                .transition()
+                .ease(d3.easePoly)
+                .duration(750)
+                .style('width', Math.round(d.t / d.d * 100) + '%');
             d3.select("#infobox-gender")
-                .text("Gender: " + d.g);
+                .text("Gender: " + formatText(d.g));
             d3.select("#infobox-environment")
-                .text("Environment: " + d.e);
+                .text("Environment: " + formatText(d.e));
             d3.select("#infobox-optogenetics")
-                .text("Optogenetics: " + d.o);
+                .text("Optogenetics: " + formatText(d.o));
             d3.select("#infobox-link")
-                .html("<iframe width='320' height='240' src='" + d.l + "&end=200&autoplay=1&fs=0' frameborder='0' allowfullscreen></iframe>");
+                .html(generateVideoEmbed(320, 240, '9erGdxmvquI', d.t, true, false));
+            d3.select(this)
+                .transition()
+                .ease(d3.easePoly)
+                .duration(250)
+                .attr("r", CIRCLE_RADIUS_HOVER)
+                .attr("stroke", DEEPPINK_COLOR)
+                .attr("stroke-width", 2);
+            if (currCircle != null) {
+                currCircle
+                    .transition()
+                    .ease(d3.easePoly)
+                    .duration(200)
+                    .attr("stroke", BLUE_COLOR)
+                    .attr("stroke-width", 1)
+                    .attr("r", CIRCLE_RADIUS_SMALL)
+                    .transition()
+                    .attr("r", CIRCLE_RADIUS_NORMAL)
+            }
 
             d3.select("#infobox-top")
                 .transition()
                 .ease(d3.easePoly)
                 .duration(300)
                 .style('background', BLUE_COLOR);
+
+            currCircle = d3.select(this);
         });
 
     d3.select("#circles")
@@ -271,7 +295,7 @@ function createScatter(dataset) {
 
 }
 
-function createHeatmap(dataset) {
+function redrawHeatmap(dataset) {
     /* Filter based on sampled data */
     if (FILTER_BY_SAMPLED) {
         dataset = dataset.filter(function(d) {
@@ -279,18 +303,19 @@ function createHeatmap(dataset) {
         })
     };
 
-    /* Color Domain */
-    color.domain([0, dataset.length / 30000]); // Points per square pixel.
+    /* Color Domain in points per square pixel */
+    color.domain([0, dataset.length / 30000]);
 
     xmin = d3.min(dataset, function(d) { return d.x});
     xmax = d3.max(dataset, function(d) { return d.x});
     ymin = d3.min(dataset, function(d) { return d.y});
     ymax = d3.max(dataset, function(d) { return d.y});
 
-    d3.select("body").select("div.topbar").select("span.data-minmax")
-        .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
-    d3.select("body").select("div.topbar").select("span.data-description")
-        .text(dataset.length + " Data Points | ");
+    d3.select('#data-points').text(dataset.length + ' Data Points');
+    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
+    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
+    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
+    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
 
     // Update Scale domains
     xScale.domain(d3.extent(dataset, function(d) { return d.x;})).nice();
@@ -347,11 +372,11 @@ function updateScatter(dataset) {
     ymin = d3.min(dataset, function(d) { return d.y });
     ymax = d3.max(dataset, function(d) { return d.y });
 
-    d3.select("body").select("div.topbar").select("span.data-minmax")
-        .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
-
-    d3.select("body").select("div.topbar").select("span.data-description")
-        .text(dataset.length + " Data Points | ");
+    d3.select('#data-points').text(dataset.length + ' Data Points');
+    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
+    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
+    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
+    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
 
     // Update Scale domains
     xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
@@ -395,6 +420,9 @@ function updateScatter(dataset) {
             .duration(350)
             .attr("r", CIRCLE_RADIUS_NORMAL)
             .attr("stroke", BLUE_COLOR)
+        })
+        .attr("class", function(d) {
+            return d.g + ' ' + d.e + ' ' + d.o; 
         });
 }
 

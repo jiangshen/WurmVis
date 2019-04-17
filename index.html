@@ -1,40 +1,62 @@
 <html>
-
     <head>
-        <title>Wurm</title>
+        <title>WurmVis</title>
         <link rel="stylesheet" href="css/style.css">
     </head>
 
     <body>
         <div class="topbar">
-            <div id="main-bar">
-                <span class="topbar-title">Wurm</span>
-                <button class="button button_red" onclick="updateButtonCall()">New Sample</button>
-                <button class="button button_green" onclick="scatterButtonCall()"><span id="scatter-text">&#x2714 Scatter</span></button>
-                <button class="button button_orange" onclick="heatmapButtonCall()"><span id="heatmap-text">Heatmap</span></button>
+            <div class='containerV'>
+                <div class='containerH'>
+                    <div id="main-bar">
+                        <span class="topbar-title">WurmVis</span>
+                        <button class="button button_red" onclick="updateButtonCall()">New Sample</button>
+                        <button class="button button_green" onclick="scatterButtonCall()"><span id="scatter-text">&#x2714 Scatter</span></button>
+                        <button class="button button_orange" onclick="heatmapButtonCall()"><span id="heatmap-text">Heatmap</span></button>
+                    </div>
+                    <div id="scatter-bar">
+                        <span class='separator-big'>|</span>
+                        <select id="genderContainer">
+                            <option value="none">Select Gender</option>
+                        </select>
+                        <select id="environmentContainer">
+                            <option value="none">Select Environment</option>
+                        </select>
+                        <select id="optogeneticsContainer">
+                            <option value="none">Select Optogenetics</option>
+                        </select>
+                        <button class="button button_violet" onclick="selectionCall()">Pick</button>
+                        <button class="button button_violet" onclick="clearButtonCall()">Clear Pick</button>
+                    </div>
+                </div>
+                <div id='bottom-bar'>
+                    <div class='containerH'>
+                        <span id='data-points' class='data-description'></span>
+                        <span class='separator-normal'>|</span>
+                        <span id='x-min' class='data-description'></span>
+                        &nbsp;
+                        <span id='x-max' class='data-description'></span>
+                        <span class='separator-normal'>|</span>
+                        <span id='y-min' class='data-description'></span>
+                        &nbsp;
+                        <span id='y-max' class='data-description'></span>
+                    </div>
+                </div>
             </div>
-            <div id="scatter-bar">
-                <span class="separator"> | </span>
-                <select id="genderContainer">
-                    <option value="none">Select Gender</option>
-                </select>
-                <select id="environmentContainer">
-                    <option value="none">Select Environment</option>
-                </select>
-                <select id="optogeneticsContainer">
-                    <option value="none">Select Optogenetics</option>
-                </select>
-                <button class="button button_violet" onclick="selectionCall()">Pick</button>
-                <button class="button button_violet" onclick="clearButtonCall()">Clear Selections</button>
-            </div>
-            <img id="ripple" src="res/ripple.svg" width="35px" height="35px"/>
-            <br />
-            <span class="data-description"></span><span class="data-minmax"></span>
-            <svg id="gradientBar" width="450" height="10"></svg>
         </div>
 
-        <div class="containerH" style="margin-left:8px; margin-bottom: 8px; margin-right: 8px">
-            <div id="chart"></div>
+        <div class='containerH' style='margin-left:8px; margin-right: 8px'>
+            <div id='chart-container'>
+                <img id='ripple' src="res/ripple.svg" width="150px" height="150px"/>
+                <svg id='chart'></svg>
+            </div>
+            <div id='gradient-bar-container'>
+                <div id='gradient-bar'>
+                    <svg width='100%' height='100%'>
+                            <rect width='100%' height='100%' style='fill: url("#linear-gradient");'></rect>
+                    </svg>
+                </div>
+            </div>
             <div id="infobox" class="containerV">
                 <div id="infobox-top">
                     <span style="position: absolute; bottom: 0px; margin: 16px; color: white; font-size: 24px;">Information</span>
