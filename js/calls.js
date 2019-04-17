@@ -95,12 +95,14 @@ function updateButtonCall() {
 // }
 
 function selectionCall() {
-    var g = genderContainer.property("value");
-    var e = environmentContainer.property("value");
+    var g = genderContainer.property('value');
+    var e = environmentContainer.property('value');
+    var o = optogeneticsContainer.property('value');
 
     g = g == 'none' ? '' : '.' + g;
     e = e == 'none' ? '' : '.' + e;
-    var selection = g + e;
+    o = o == 'none' ? '' : '.' + o;
+    var selection = g + e + o;
 
     if (selection != '') {
         d3.selectAll('circle')
@@ -134,6 +136,9 @@ function selectionCall() {
     }
 }
 
+/**
+ * Clears Scatterplot selection
+ */
 function clearButtonCall() {
     d3.selectAll('circle')
         .transition()

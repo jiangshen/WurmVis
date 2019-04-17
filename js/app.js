@@ -35,27 +35,19 @@ d3.json(DATA_PATH, function(d) {
     d3.map(sampled_data, function(d){ return d.g; }).keys().forEach(gender => {
         genderContainer.append("option")
             .attr("value", gender)
-            .text(gender);
+            .text(formatText(gender));
     });
     d3.map(sampled_data, function(d){ return d.e; }).keys().forEach(environment => {
         environmentContainer.append("option")
             .attr("value", environment)
-            .text(environment);
+            .text(formatText(environment));
     });
-    // -- change optogenetics data!!
-    // d3.map(sampled_data, function(d){ return d.o; }).keys().forEach(optogenetics => {
-    //     optogeneticsContainer.append("option")
-    //         .attr("value", optogenetics)
-    //         .text(optogenetics);
-    // });
+    d3.map(sampled_data, function(d){ return d.o; }).keys().forEach(optogenetics => {
+        optogeneticsContainer.append("option")
+            .attr("value", optogenetics)
+            .text(formatText(optogenetics));
+    });
 
-    // d3.map(all_data, function(d) {
-    //     return d.o;
-    // })
-    // .keys()
-    // .forEach(o => {
-    //     alert(o);
-    // })
     SAMPLED_XMIN = d3.min(sampled_data, function(d) { return d.x });
     SAMPLED_XMAX = d3.max(sampled_data, function(d) { return d.x });
     SAMPLED_YMIN = d3.min(sampled_data, function(d) { return d.y });
@@ -110,7 +102,7 @@ function initChart(dataset) {
         .attr("stroke", BLUE_COLOR)
         .attr("stroke-width", 1)
         .attr("class", function(d) { 
-            return d.g + ' ' + d.e; 
+            return d.g + ' ' + d.e + ' ' + d.o; 
         })
         .on('mouseover', function(d, i) {
             d3.select(this)
@@ -141,13 +133,13 @@ function initChart(dataset) {
             d3.select("#infobox-time")
                 .text("Time: " + d.t);
             d3.select("#infobox-gender")
-                .text("Gender: " + d.g);
+                .text("Gender: " + formatText(d.g));
             d3.select("#infobox-environment")
-                .text("Environment: " + d.e);
+                .text("Environment: " + formatText(d.e));
             d3.select("#infobox-optogenetics")
-                .text("Optogenetics: " + d.o);
+                .text("Optogenetics: " + formatText(d.o));
             d3.select("#infobox-link")
-                .html("<iframe width='320' height='240' src='" + d.l + "&end=200&autoplay=1&fs=0' frameborder='0' allowfullscreen></iframe>");
+                .html(generateVideoEmbed(320, 240, '9erGdxmvquI', d.t, true, false));
             d3.select(this)
                 .transition()
                 .ease(d3.easePoly)
@@ -155,6 +147,10 @@ function initChart(dataset) {
                 .attr("r", CIRCLE_RADIUS_HOVER)
                 .attr("stroke", DEEPPINK_COLOR)
                 .attr("stroke-width", 2);
+            
+            // alert(d.t / d.d);
+
+            console.log(d.l);
 
             d3.select("#infobox-top")
                 .transition()
@@ -397,18 +393,6 @@ function updateScatter(dataset) {
             .attr("r", CIRCLE_RADIUS_NORMAL)
             .attr("stroke", BLUE_COLOR)
         });
-}
-
-function sample(arr, size) {
-    if (size == -1) return arr;
-    var shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
-    while (i --> min) {
-        index = Math.floor((i + 1) * Math.random());
-        temp = shuffled[index];
-        shuffled[index] = shuffled[i];
-        shuffled[i] = temp;
-    }
-    return shuffled.slice(min);
 }
 
 function toggleScatterBar(dst_state) {
