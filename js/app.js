@@ -130,8 +130,13 @@ function initChart(dataset) {
         .on('click', function(d, i) {
             d3.select("#infobox-xy")
                 .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
-            d3.select("#infobox-time")
-                .text("Time: " + d.t);
+
+            d3.select('#time-bar')
+                .transition()
+                .ease(d3.easePoly)
+                .duration(750)
+                .style('width', Math.round(d.t / d.d * 100) + '%');
+
             d3.select("#infobox-gender")
                 .text("Gender: " + formatText(d.g));
             d3.select("#infobox-environment")
@@ -149,8 +154,6 @@ function initChart(dataset) {
                 .attr("stroke-width", 2);
             
             // alert(d.t / d.d);
-
-            console.log(d.l);
 
             d3.select("#infobox-top")
                 .transition()

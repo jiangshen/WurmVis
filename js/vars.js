@@ -32,6 +32,7 @@ const PURPLE_COLOR = "#8F5E99";
 const DEEPPINK_COLOR = "#FF1493";
 
 var xmin, ymin, xmax, ymax;
+var prev_time_percentage = 0;
 
 /* Elements */
 var svg = d3.select("#chart")
