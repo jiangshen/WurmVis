@@ -1,8 +1,9 @@
 function scatterButtonCall() {
     if (currState == "heatmap") {
-        /* Remove Heatmap */
+        /* Remove Heatmap and add in Scatter Bar */
         d3.select("#heatmap").remove().exit();
         gradientBar.style("opacity", 0.0);
+        toggleScatterBar('scatter');
         
         d3.select("#scatter-text")
             .style("font-weight", "bold")
@@ -24,7 +25,8 @@ function scatterButtonCall() {
 
 function heatmapButtonCall() {
     if (currState == "scatter") {
-        /* Remove Scatter Plot */
+        /* Remove Scatter Plot and Scatter Bar */
+        toggleScatterBar('heatmap');
         d3.select("#circles").remove().exit();
         // d3.selectAll("#circles").exit().transition().duration(500).style("opacity", 0).remove();
         d3.select("#heatmap-text")
@@ -65,25 +67,71 @@ function heatmapButtonCall() {
 function updateButtonCall() {
     if (currState == "scatter") {
         sampled_data = sample(all_data, SAMPLE_SIZE);
+
+        SAMPLED_XMIN = d3.min(sampled_data, function(d) { return d.x });
+        SAMPLED_XMAX = d3.max(sampled_data, function(d) { return d.x });
+        SAMPLED_YMIN = d3.min(sampled_data, function(d) { return d.y });
+        SAMPLED_YMAX = d3.max(sampled_data, function(d) { return d.y });
+
         updateScatter(sampled_data);
     }
 }
 
-function strainButtonCall(strain) {
-    d3.selectAll('circle')
-        .transition()
-        .ease(d3.easePoly)
-        .duration(200)
-        .attr("fill", BLUE_COLOR);
+// function strainButtonCall(strain) {
+//     d3.selectAll('circle')
+//         .transition()
+//         .ease(d3.easePoly)
+//         .duration(200)
+//         .attr("fill", BLUE_COLOR);
 
-    d3.selectAll('.' + strain)
-        .transition()
-        .ease(d3.easePoly)
-        .duration(200)
-        .attr("fill", PURPLE_COLOR)
-        .attr("r", 8)
-        .transition()
-        .attr("r", 5);
+//     d3.selectAll('.' + strain)
+//         .transition()
+//         .ease(d3.easePoly)
+//         .duration(200)
+//         .attr("fill", PURPLE_COLOR)
+//         .attr("r", 8)
+//         .transition()
+//         .attr("r", 5);
+// }
+
+function selectionCall() {
+    var g = genderContainer.property("value");
+    var e = environmentContainer.property("value");
+
+    g = g == 'none' ? '' : '.' + g;
+    e = e == 'none' ? '' : '.' + e;
+    var selection = g + e;
+
+    if (selection != '') {
+        d3.selectAll('circle')
+            .transition()
+            .ease(d3.easePoly)
+            .duration(200)
+            .attr("stroke", BLUE_COLOR)
+            .attr("stroke-width", 1)
+            .attr("r", CIRCLE_RADIUS_SMALL)
+            .transition()
+            .attr("r", CIRCLE_RADIUS_NORMAL);
+
+        var selected = d3.selectAll(selection);
+        var size = selected.size();
+        selected.transition()
+            .ease(d3.easePoly)
+            .duration(200)
+            .attr("stroke", PURPLE_COLOR)
+            .attr("stroke-width", 2)
+            .attr("r", CIRCLE_RADIUS_HOVER)
+            .transition()
+            .attr("r", CIRCLE_RADIUS_NORMAL);
+
+        d3.select("body").select("div.topbar").select("span.data-description")
+            .text("0 Data Points | This is " + size/SAMPLE_SIZE * 100 + "% of the population | ");
+        
+        // alert("Selected: " + selection + ". This is " + size/SAMPLE_SIZE * 100 + "% of the population");
+
+    } else {
+        alert('Please pick at least one attribute');
+    }
 }
 
 function clearButtonCall() {
@@ -91,8 +139,9 @@ function clearButtonCall() {
         .transition()
         .ease(d3.easePoly)
         .duration(200)
-        .attr("fill", BLUE_COLOR)
-        .attr("r", 8)
+        .attr("stroke", BLUE_COLOR)
+        .attr("stroke-width", 1)
+        .attr("r", CIRCLE_RADIUS_SMALL)
         .transition()
-        .attr("r", 5);
+        .attr("r", CIRCLE_RADIUS_NORMAL);
 }

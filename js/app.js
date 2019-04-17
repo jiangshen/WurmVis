@@ -19,7 +19,6 @@ d3.json(DATA_PATH, function(d) {
     //         .text(strain);
     // });
 
-
     // !! Temp D3 Getting Strain Distributions
     // var strainCount = d3.nest()
     //     .key(function(d) {return d.strain;})
@@ -29,6 +28,27 @@ d3.json(DATA_PATH, function(d) {
     // initChart(d.data);
     all_data = d;
     sampled_data = sample(d, SAMPLE_SIZE);
+
+    /** 
+     *  Takes Gender, Environment and Optogenetics info
+     */
+    d3.map(sampled_data, function(d){ return d.g; }).keys().forEach(gender => {
+        genderContainer.append("option")
+            .attr("value", gender)
+            .text(gender);
+    });
+    d3.map(sampled_data, function(d){ return d.e; }).keys().forEach(environment => {
+        environmentContainer.append("option")
+            .attr("value", environment)
+            .text(environment);
+    });
+    // -- change optogenetics data!!
+    // d3.map(sampled_data, function(d){ return d.o; }).keys().forEach(optogenetics => {
+    //     optogeneticsContainer.append("option")
+    //         .attr("value", optogenetics)
+    //         .text(optogenetics);
+    // });
+
     // d3.map(all_data, function(d) {
     //     return d.o;
     // })
@@ -36,8 +56,10 @@ d3.json(DATA_PATH, function(d) {
     // .forEach(o => {
     //     alert(o);
     // })
-    console.log(sampled_data);
-
+    SAMPLED_XMIN = d3.min(sampled_data, function(d) { return d.x });
+    SAMPLED_XMAX = d3.max(sampled_data, function(d) { return d.x });
+    SAMPLED_YMIN = d3.min(sampled_data, function(d) { return d.y });
+    SAMPLED_YMAX = d3.max(sampled_data, function(d) { return d.y });
     initChart(sampled_data);
     d3.select("#ripple")
         .transition()
@@ -87,7 +109,9 @@ function initChart(dataset) {
         .attr("r", CIRCLE_RADIUS_NORMAL)
         .attr("stroke", BLUE_COLOR)
         .attr("stroke-width", 1)
-        .attr("class", function(d) { return d.strain; })
+        .attr("class", function(d) { 
+            return d.g + ' ' + d.e; 
+        })
         .on('mouseover', function(d, i) {
             d3.select(this)
                 .transition()
@@ -114,10 +138,23 @@ function initChart(dataset) {
         .on('click', function(d, i) {
             d3.select("#infobox-xy")
                 .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
-            d3.select("#infobox-strain")
-                .text("Strain: " + d.strain);
+            d3.select("#infobox-time")
+                .text("Time: " + d.t);
+            d3.select("#infobox-gender")
+                .text("Gender: " + d.g);
+            d3.select("#infobox-environment")
+                .text("Environment: " + d.e);
+            d3.select("#infobox-optogenetics")
+                .text("Optogenetics: " + d.o);
             d3.select("#infobox-link")
-                .html("<iframe width='320' height='240' src='" + d.link + "&end=200&autoplay=1&fs=0' frameborder='0' allowfullscreen></iframe>");
+                .html("<iframe width='320' height='240' src='" + d.l + "&end=200&autoplay=1&fs=0' frameborder='0' allowfullscreen></iframe>");
+            d3.select(this)
+                .transition()
+                .ease(d3.easePoly)
+                .duration(250)
+                .attr("r", CIRCLE_RADIUS_HOVER)
+                .attr("stroke", DEEPPINK_COLOR)
+                .attr("stroke-width", 2);
 
             d3.select("#infobox-top")
                 .transition()
@@ -169,9 +206,9 @@ function createScatter(dataset) {
         .call(yAxis);
 
     // Create Scatter
-    svg.append("g") //Create new g
+    svg.append("g")
         .style("opacity", 0.0)
-        .attr("id", "circles") //Assign ID of 'circles'
+        .attr("id", "circles")
         .attr("clip-path", "url(#chart-area)") //Add reference to clipPath
         .selectAll("circle")
         .data(dataset)
@@ -190,7 +227,6 @@ function createScatter(dataset) {
                 .ease(d3.easePoly)
                 .duration(250)
                 .attr("r", CIRCLE_RADIUS_HOVER);
-                // .style("fill", "deeppink");
         })
         .on('mouseout', function(d, i) {
             d3.select(this)
@@ -210,15 +246,21 @@ function createScatter(dataset) {
         .on('click', function(d, i) {
             d3.select("#infobox-xy")
                 .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
-            d3.select("#infobox-strain")
-                .text("Strain: " + d.strain);
+            d3.select("#infobox-time")
+                .text("Time: " + d.t);
+            d3.select("#infobox-gender")
+                .text("Gender: " + d.g);
+            d3.select("#infobox-environment")
+                .text("Environment: " + d.e);
+            d3.select("#infobox-optogenetics")
+                .text("Optogenetics: " + d.o);
             d3.select("#infobox-link")
-                .html("<iframe width='320' height='240' src='" + d.link + "&end=200&autoplay=1&fs=0' frameborder='0' allowfullscreen></iframe>");
+                .html("<iframe width='320' height='240' src='" + d.l + "&end=200&autoplay=1&fs=0' frameborder='0' allowfullscreen></iframe>");
 
             d3.select("#infobox-top")
                 .transition()
                 .ease(d3.easePoly)
-                .duration(250)
+                .duration(300)
                 .style('background', BLUE_COLOR);
         });
 
@@ -230,22 +272,30 @@ function createScatter(dataset) {
 
 }
 
-function createHeatmap(all_data) {
-    color.domain([0, all_data.length / 30000]); // Points per square pixel.
+function createHeatmap(dataset) {
+    /* Filter based on sampled data */
+    if (FILTER_BY_SAMPLED) {
+        dataset = dataset.filter(function(d) {
+            if (d.x >= SAMPLED_XMIN && d.x <= SAMPLED_XMAX && d.y >= SAMPLED_YMIN && d.y <= SAMPLED_YMAX) return d;
+        })
+    };
 
-    xmin = d3.min(all_data, function(d) { return d.x});
-    xmax = d3.max(all_data, function(d) { return d.x});
-    ymin = d3.min(all_data, function(d) { return d.y});
-    ymax = d3.max(all_data, function(d) { return d.y});
+    /* Color Domain */
+    color.domain([0, dataset.length / 30000]); // Points per square pixel.
+
+    xmin = d3.min(dataset, function(d) { return d.x});
+    xmax = d3.max(dataset, function(d) { return d.x});
+    ymin = d3.min(dataset, function(d) { return d.y});
+    ymax = d3.max(dataset, function(d) { return d.y});
 
     d3.select("body").select("div.topbar").select("span.data-minmax")
         .text("x-min: " + xmin.toFixed(3) + " x-max: " + xmax.toFixed(3) + " | y-min: " + ymin.toFixed(3) + " y-max: " + ymax.toFixed(3));
     d3.select("body").select("div.topbar").select("span.data-description")
-        .text(all_data.length + " Data Points | ");
+        .text(dataset.length + " Data Points | ");
 
     // Update Scale domains
-    xScale.domain(d3.extent(all_data, function(d) { return d.x;})).nice();
-    yScale.domain(d3.extent(all_data, function(d) { return d.y;})).nice();
+    xScale.domain(d3.extent(dataset, function(d) { return d.x;})).nice();
+    yScale.domain(d3.extent(dataset, function(d) { return d.y;})).nice();
 
     // Update X axis
     svg.select(".x.axis")
@@ -278,7 +328,7 @@ function createHeatmap(all_data) {
             })
             .size([w, h])
             .bandwidth(10)
-            (all_data))
+            (dataset))
         .enter().append("path")
         .attr("fill", function(d) {
             return color(d.value);
@@ -359,4 +409,21 @@ function sample(arr, size) {
         shuffled[i] = temp;
     }
     return shuffled.slice(min);
+}
+
+function toggleScatterBar(dst_state) {
+    if (dst_state == 'heatmap') {
+        scatter_bar
+            .transition()
+            .ease(d3.easePoly)
+            .duration(750)
+            .style('width', '0px');  
+    } else {
+        scatter_bar
+            .transition()
+            .ease(d3.easePoly)
+            .duration(750)
+            .style('width', scatter_bar_width)
+            .attr('display', 'none');
+    }
 }

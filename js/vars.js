@@ -3,9 +3,12 @@ const DATA_PATH = "/data/all.json";
 
 /* Sampling */
 const SAMPLE_SIZE = 500;
-var IS_SAMPLING_HEATMAP = true;
+const HEATMAP_SAMPLE_SIZE = 50000;
+const IS_SAMPLING_HEATMAP = true;
+const FILTER_BY_SAMPLED = true;
 var all_data;
 var sampled_data;
+var SAMPLED_XMIN, SAMPLED_XMAX, SAMPLED_YMIN, SAMPLED_YMAX;
 
 /* Dimensions */
 const w = 1000;
@@ -15,11 +18,12 @@ const legendW = 450;
 const legendH = 10;
 var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
+const CIRCLE_RADIUS_SMALL = 1.5;
 const CIRCLE_RADIUS_NORMAL = 3;
 const CIRCLE_RADIUS_HOVER = 5;
 
 /* Colors */
-const TRANSPARENT_COLOR = "#ffffff00"
+const TRANSPARENT_COLOR = "#FFFFFF00";
 const RED_COLOR = "#F44336";
 const ORANGE_COLOR = "#FF9919";
 const SLATE_COLOR = "#5D6D7E"
@@ -28,6 +32,14 @@ const PURPLE_COLOR = "#8F5E99";
 const DEEPPINK_COLOR = "#FF1493";
 
 var xmin, ymin, xmax, ymax;
+
+/* Elements */
+var svg = d3.select("#chart")
+	.append("svg")
+	.attr("width", w)
+    .attr("height", h);
+var scatter_bar = d3.select('#scatter-bar');
+var scatter_bar_width = scatter_bar.style('width').slice(0, -2);
 
 /* D3 Scales */
 var xScale = d3.scaleLinear().rangeRound([padding, w - padding * 2]);	
@@ -39,13 +51,9 @@ var xAxis, yAxis;
 /* Heatmap Color Range */
 var color = d3.scaleSequential(d3.interpolateBuPu);
 
-/* Elements */
-var svg = d3.select("#chart")
-	.append("svg")
-	.attr("width", w)
-    .attr("height", h);
-
-var strainContainer = d3.select("#strainContainer");
+var genderContainer = d3.select("#genderContainer");
+var environmentContainer = d3.select("#environmentContainer");
+var optogeneticsContainer = d3.select("#optogeneticsContainer");
 
 var gradientBar = d3.select("#gradientBar")
     .style("opacity", 0.0);

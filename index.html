@@ -7,14 +7,26 @@
 
     <body>
         <div class="topbar">
-            <span class="topbar-title">Wurm</span>
-            <button class="button button_red" onclick="updateButtonCall()">New Sample</button>
-            <button class="button button_green" onclick="scatterButtonCall()"><span id="scatter-text">&#x2714 Scatter</span></button>
-            <button class="button button_orange" onclick="heatmapButtonCall()"><span id="heatmap-text">Heatmap</span></button>
-            <span class="separator"> | </span>
-            <span id="strainContainer">
-                <button class="button button_violet" onclick="clearButtonCall()">All Strains</button>
-            </span>
+            <div id="main-bar">
+                <span class="topbar-title">Wurm</span>
+                <button class="button button_red" onclick="updateButtonCall()">New Sample</button>
+                <button class="button button_green" onclick="scatterButtonCall()"><span id="scatter-text">&#x2714 Scatter</span></button>
+                <button class="button button_orange" onclick="heatmapButtonCall()"><span id="heatmap-text">Heatmap</span></button>
+            </div>
+            <div id="scatter-bar">
+                <span class="separator"> | </span>
+                <select id="genderContainer">
+                    <option value="none">Select Gender</option>
+                </select>
+                <select id="environmentContainer">
+                    <option value="none">Select Environment</option>
+                </select>
+                <select id="optogeneticsContainer">
+                    <option value="none">Select Optogenetics</option>
+                </select>
+                <button class="button button_violet" onclick="selectionCall()">Pick</button>
+                <button class="button button_violet" onclick="clearButtonCall()">Clear Selections</button>
+            </div>
             <img id="ripple" src="res/ripple.svg" width="35px" height="35px"/>
             <br />
             <span class="data-description"></span><span class="data-minmax"></span>
@@ -28,9 +40,12 @@
                     <span style="position: absolute; bottom: 0px; margin: 16px; color: white; font-size: 24px;">Information</span>
                 </div>
                 <div id="infobox-content">
-                    <span class="info-xy" id="infobox-xy">Select a point to view its information</span><br><hr>
-                    <span class="info-xy" id="infobox-strain"></span><br><hr>
-                    <span class="info-xy" id="infobox-link"></span><br><br>
+                    <span class="info-xy" id="infobox-xy" style="font-weight: bold">Select a point to view its information</span><br><hr>
+                    <span class="info-xy" id="infobox-time">Time</span><br><hr>
+                    <span class="info-xy" id="infobox-gender">Gender</span><br><hr>
+                    <span class="info-xy" id="infobox-environment">Environment</span><br><hr>
+                    <span class="info-xy" id="infobox-optogenetics">Optogenetics</span><br><hr>
+                    <span class="info-xy" id="infobox-link">Video</span><br><br>
                 </div>
             </div>
         </div>

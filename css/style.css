@@ -92,6 +92,22 @@ div #infobox-top {
     position: relative;
 }
 
+div #scatter-bar {
+    /* resize: horizontal; */
+    /* background: #4CAF50; */
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    /* height: 46px; */
+    /* width: 100px;
+    height: 50px; */
+    /* position: relative; */
+}
+
+div #main-bar {
+    display: inline-block;
+}
+
 /* D3 */
 
 .axis path,
