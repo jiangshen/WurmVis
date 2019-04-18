@@ -112,7 +112,7 @@ function initScatter(dataset) {
                 .transition()
                 .ease(d3.easePoly)
                 .duration(750)
-                .style('width', Math.round(d.t / d.d * 100) + '%');
+                .style('width', generateTimePercentage(d.t, d.d));
             d3.select('#infobox-gender')
                 .text(formatText(d.g));
             d3.select('#infobox-environment')
@@ -227,7 +227,7 @@ function redrawScatter(dataset) {
                 .transition()
                 .ease(d3.easePoly)
                 .duration(750)
-                .style('width', Math.round(d.t / d.d * 100) + '%');
+                .style('width', generateTimePercentage(d.t, d.d));
             d3.select('#infobox-gender')
                 .text(formatText(d.g));
             d3.select('#infobox-environment')

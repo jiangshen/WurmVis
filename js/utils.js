@@ -44,4 +44,11 @@ function generateVideoEmbed(w, h, uid, starttime, autoplay, fullscreen) {
         '" frameborder="0" allow="accelerometer; ' + (autoplay ? 'autoplay; ' : '') +
         'encrypted-media; gyroscope; picture-in-picture"' +
         (fullscreen ? ' allowfullscreen' : '') + '></iframe>';
-} 
+}
+
+function generateTimePercentage(currtime, totaltime) {
+    let p = Math.round(currtime / totaltime * 100);
+    if (p < 3) p = 3;
+    if (p > 100) p = 100;
+    return p + '%';
+}
