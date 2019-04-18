@@ -89,7 +89,7 @@ function initScatter(dataset) {
         .attr("fill", TRANSPARENT_COLOR)
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
-        .attr("r", CIRCLE_RADIUS_NORMAL)
+        .attr('r', CIRCLE_RADIUS_NORMAL)
         .attr("stroke", BLUE_COLOR)
         .attr("stroke-width", 1)
         .attr("class", function(d) {
@@ -100,43 +100,43 @@ function initScatter(dataset) {
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", CIRCLE_RADIUS_HOVER);
+                .attr('r', CIRCLE_RADIUS_HOVER);
         })
         .on('mouseout', function(d, i) {
             d3.select(this)
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", CIRCLE_RADIUS_NORMAL);
+                .attr('r', CIRCLE_RADIUS_NORMAL);
             d3.select("#infobox-top")
                 .transition()
                 .ease(d3.easePoly)
                 .duration(300)
-                .style('background', '#f44336');
-            d3.select("#infobox-xy")
+                .style('background', RED_COLOR);
+            d3.select('#infobox-xy')
                 .text("Select a point to view its information");
         })
         .on('click', function(d, i) {
-            d3.select("#infobox-xy")
+            d3.select('#infobox-xy')
                 .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
             d3.select('#time-bar')
                 .transition()
                 .ease(d3.easePoly)
                 .duration(750)
                 .style('width', Math.round(d.t / d.d * 100) + '%');
-            d3.select("#infobox-gender")
+            d3.select('#infobox-gender')
                 .text("Gender: " + formatText(d.g));
             d3.select("#infobox-environment")
                 .text("Environment: " + formatText(d.e));
             d3.select("#infobox-optogenetics")
                 .text("Optogenetics: " + formatText(d.o));
-            d3.select("#infobox-link")
-                .html(generateVideoEmbed(320, 240, '9erGdxmvquI', d.t, true, false));
+            d3.select('#infobox-link')
+                .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
             d3.select(this)
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", CIRCLE_RADIUS_HOVER)
+                .attr('r', CIRCLE_RADIUS_HOVER)
                 .attr("stroke", DEEPPINK_COLOR)
                 .attr("stroke-width", 2);
             if (currCircle != null) {
@@ -146,9 +146,9 @@ function initScatter(dataset) {
                     .duration(200)
                     .attr("stroke", BLUE_COLOR)
                     .attr("stroke-width", 1)
-                    .attr("r", CIRCLE_RADIUS_SMALL)
+                    .attr('r', CIRCLE_RADIUS_SMALL)
                     .transition()
-                    .attr("r", CIRCLE_RADIUS_NORMAL)
+                    .attr('r', CIRCLE_RADIUS_NORMAL)
             }
 
             d3.select("#infobox-top")
@@ -215,7 +215,7 @@ function redrawScatter(dataset) {
         .attr("cx", function(d) { return xScale(d.x); })
         .attr("cy", function(d) { return yScale(d.y); })
         .attr("class", function(d) { return d.strain; })
-        .attr("r", CIRCLE_RADIUS_NORMAL)
+        .attr('r', CIRCLE_RADIUS_NORMAL)
         .attr("stroke", BLUE_COLOR)
         .attr("stroke-width", 1)
         .attr("class", function(d) {
@@ -226,44 +226,44 @@ function redrawScatter(dataset) {
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", CIRCLE_RADIUS_HOVER);
+                .attr('r', CIRCLE_RADIUS_HOVER);
         })
         .on('mouseout', function(d, i) {
             d3.select(this)
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", CIRCLE_RADIUS_NORMAL);
+                .attr('r', CIRCLE_RADIUS_NORMAL);
             d3.select("#infobox-top")
                 .transition()
                 .ease(d3.easePoly)
                 .duration(300)
-                .style('background', '#f44336');
-            d3.select("#infobox-xy")
+                .style('background', RED_COLOR);
+            d3.select('#infobox-xy')
                 .text("Select a point to view its information");
                 // .style("fill", BLUE_COLOR);
         })
         .on('click', function(d, i) {
-            d3.select("#infobox-xy")
+            d3.select('#infobox-xy')
                 .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
             d3.select('#time-bar')
                 .transition()
                 .ease(d3.easePoly)
                 .duration(750)
                 .style('width', Math.round(d.t / d.d * 100) + '%');
-            d3.select("#infobox-gender")
+            d3.select('#infobox-gender')
                 .text("Gender: " + formatText(d.g));
             d3.select("#infobox-environment")
                 .text("Environment: " + formatText(d.e));
             d3.select("#infobox-optogenetics")
                 .text("Optogenetics: " + formatText(d.o));
-            d3.select("#infobox-link")
-                .html(generateVideoEmbed(320, 240, '9erGdxmvquI', d.t, true, false));
+            d3.select('#infobox-link')
+                .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
             d3.select(this)
                 .transition()
                 .ease(d3.easePoly)
                 .duration(250)
-                .attr("r", CIRCLE_RADIUS_HOVER)
+                .attr('r', CIRCLE_RADIUS_HOVER)
                 .attr("stroke", DEEPPINK_COLOR)
                 .attr("stroke-width", 2);
             if (currCircle != null) {
@@ -273,9 +273,9 @@ function redrawScatter(dataset) {
                     .duration(200)
                     .attr("stroke", BLUE_COLOR)
                     .attr("stroke-width", 1)
-                    .attr("r", CIRCLE_RADIUS_SMALL)
+                    .attr('r', CIRCLE_RADIUS_SMALL)
                     .transition()
-                    .attr("r", CIRCLE_RADIUS_NORMAL)
+                    .attr('r', CIRCLE_RADIUS_NORMAL)
             }
 
             d3.select("#infobox-top")
@@ -287,7 +287,7 @@ function redrawScatter(dataset) {
             currCircle = d3.select(this);
         });
 
-    d3.select("#circles")
+    d3.select('#circles')
         .transition()
         .ease(d3.easePoly)
         .duration(750)
@@ -304,7 +304,7 @@ function redrawHeatmap(dataset) {
     };
 
     /* Color Domain in points per square pixel */
-    color.domain([0, dataset.length / 30000]);
+    color.domain([0, dataset.length / 30000]); // 50 looks pretty good
 
     xmin = d3.min(dataset, function(d) { return d.x});
     xmax = d3.max(dataset, function(d) { return d.x});
@@ -405,7 +405,7 @@ function updateScatter(dataset) {
         .on("start", function() {
             d3.select(this)
             .attr("stroke", "deeppink")
-            .attr("r", CIRCLE_RADIUS_HOVER);
+            .attr('r', CIRCLE_RADIUS_HOVER);
         })
         .attr("cx", function(d) {
             return xScale(d.x);
@@ -418,7 +418,7 @@ function updateScatter(dataset) {
             .transition()
             .ease(d3.easePoly)
             .duration(350)
-            .attr("r", CIRCLE_RADIUS_NORMAL)
+            .attr('r', CIRCLE_RADIUS_NORMAL)
             .attr("stroke", BLUE_COLOR)
         })
         .attr("class", function(d) {

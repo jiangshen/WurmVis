@@ -19,7 +19,7 @@
     --axis-font-size: 11px;
 
     /* Dimensions */
-    --chart-width: 1000px;
+    --chart-width: 950px;
     --chart-height: 700px;
 }
 
@@ -76,7 +76,7 @@ sub {
 }
 
 .separator-big {
-    color: var(--white-color);
+    color: var(--light-grey-color);
     font-size: var(--big-font-size);
     margin-left: 4px;
 }
@@ -86,7 +86,7 @@ sub {
     padding-bottom: 2px;
     padding-left: 4px;
     padding-right: 4px;
-    color: var(--white-color);
+    color: var(--light-grey-color);
     font-size: var(--normal-font-size);
 }
 

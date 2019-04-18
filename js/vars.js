@@ -3,8 +3,8 @@ const DATA_PATH = "/data/all.json";
 
 /* Sampling */
 const SAMPLE_SIZE = 500;
-const HEATMAP_SAMPLE_SIZE = 50000;
-const IS_SAMPLING_HEATMAP = true;
+const HEATMAP_SAMPLE_SIZE = 20000;
+const IS_SAMPLING_HEATMAP = false;
 const FILTER_BY_SAMPLED = true;
 var all_data;
 var sampled_data;
