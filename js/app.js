@@ -57,16 +57,7 @@ d3.json(DATA_PATH, function(d) {
 });
 
 function initScatter(dataset) {
-    xmin = d3.min(dataset, function(d) { return d.x });
-    xmax = d3.max(dataset, function(d) { return d.x });
-    ymin = d3.min(dataset, function(d) { return d.y });
-    ymax = d3.max(dataset, function(d) { return d.y });
-
-    d3.select('#data-points').text(dataset.length + ' Data Points');
-    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
-    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
-    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
-    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
+    updateMinMax(dataset);
 
     d3.select('#bottom-bar')
         .transition()
@@ -113,23 +104,21 @@ function initScatter(dataset) {
                 .ease(d3.easePoly)
                 .duration(300)
                 .style('background', RED_COLOR);
-            d3.select('#infobox-xy')
-                .text("Select a point to view its information");
         })
         .on('click', function(d, i) {
-            d3.select('#infobox-xy')
-                .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
+            d3.select('#infobox-x').text('X | ' + d.x.toFixed(1));
+            d3.select('#infobox-y').text('Y | ' + d.y.toFixed(1));
             d3.select('#time-bar')
                 .transition()
                 .ease(d3.easePoly)
                 .duration(750)
                 .style('width', Math.round(d.t / d.d * 100) + '%');
             d3.select('#infobox-gender')
-                .text("Gender: " + formatText(d.g));
-            d3.select("#infobox-environment")
-                .text("Environment: " + formatText(d.e));
-            d3.select("#infobox-optogenetics")
-                .text("Optogenetics: " + formatText(d.o));
+                .text(formatText(d.g));
+            d3.select('#infobox-environment')
+                .text(formatText(d.e));
+            d3.select('#infobox-optogenetics')
+                .text(formatText(d.o));
             d3.select('#infobox-link')
                 .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
             d3.select(this)
@@ -174,16 +163,7 @@ function initScatter(dataset) {
 }
 
 function redrawScatter(dataset) {
-    xmin = d3.min(dataset, function(d) { return d.x });
-    xmax = d3.max(dataset, function(d) { return d.x });
-    ymin = d3.min(dataset, function(d) { return d.y });
-    ymax = d3.max(dataset, function(d) { return d.y });
-
-    d3.select('#data-points').text(dataset.length + ' Data Points');
-    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
-    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
-    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
-    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
+    updateMinMax(dataset);
 
     // Update Scale domains
     xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
@@ -239,24 +219,21 @@ function redrawScatter(dataset) {
                 .ease(d3.easePoly)
                 .duration(300)
                 .style('background', RED_COLOR);
-            d3.select('#infobox-xy')
-                .text("Select a point to view its information");
-                // .style("fill", BLUE_COLOR);
         })
         .on('click', function(d, i) {
-            d3.select('#infobox-xy')
-                .text("Point (x: " + d.x.toFixed(3) + ", y: " + d.y.toFixed(3) + ")");
+            d3.select('#infobox-x').text('X | ' + d.x.toFixed(1));
+            d3.select('#infobox-y').text('Y | ' + d.y.toFixed(1));
             d3.select('#time-bar')
                 .transition()
                 .ease(d3.easePoly)
                 .duration(750)
                 .style('width', Math.round(d.t / d.d * 100) + '%');
             d3.select('#infobox-gender')
-                .text("Gender: " + formatText(d.g));
-            d3.select("#infobox-environment")
-                .text("Environment: " + formatText(d.e));
-            d3.select("#infobox-optogenetics")
-                .text("Optogenetics: " + formatText(d.o));
+                .text(formatText(d.g));
+            d3.select('#infobox-environment')
+                .text(formatText(d.e));
+            d3.select('#infobox-optogenetics')
+                .text(formatText(d.o));
             d3.select('#infobox-link')
                 .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
             d3.select(this)
@@ -292,7 +269,6 @@ function redrawScatter(dataset) {
         .ease(d3.easePoly)
         .duration(750)
         .style("opacity", 1.0);
-
 }
 
 function redrawHeatmap(dataset) {
@@ -306,16 +282,7 @@ function redrawHeatmap(dataset) {
     /* Color Domain in points per square pixel */
     color.domain([0, dataset.length / 30000]); // 50 looks pretty good
 
-    xmin = d3.min(dataset, function(d) { return d.x});
-    xmax = d3.max(dataset, function(d) { return d.x});
-    ymin = d3.min(dataset, function(d) { return d.y});
-    ymax = d3.max(dataset, function(d) { return d.y});
-
-    d3.select('#data-points').text(dataset.length + ' Data Points');
-    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
-    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
-    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
-    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
+    updateMinMax(dataset);
 
     // Update Scale domains
     xScale.domain(d3.extent(dataset, function(d) { return d.x;})).nice();
@@ -367,16 +334,7 @@ function redrawHeatmap(dataset) {
 }
 
 function updateScatter(dataset) {
-    xmin = d3.min(dataset, function(d) { return d.x });
-    xmax = d3.max(dataset, function(d) { return d.x });
-    ymin = d3.min(dataset, function(d) { return d.y });
-    ymax = d3.max(dataset, function(d) { return d.y });
-
-    d3.select('#data-points').text(dataset.length + ' Data Points');
-    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
-    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
-    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
-    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
+    updateMinMax(dataset)
 
     // Update Scale domains
     xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
@@ -441,4 +399,17 @@ function toggleScatterBar(dst_state) {
             .style('width', scatter_bar_width)
             .attr('display', 'none');
     }
+}
+
+function updateMinMax(dataset) {
+    xmin = d3.min(dataset, function (d) { return d.x; });
+    xmax = d3.max(dataset, function (d) { return d.x; });
+    ymin = d3.min(dataset, function (d) { return d.y; });
+    ymax = d3.max(dataset, function (d) { return d.y; });
+    
+    d3.select('#data-points').text(dataset.length + ' Data Points');
+    d3.select('#x-min').html('x<sub>min</sub> : ' + xmin.toFixed(3));
+    d3.select('#x-max').html('x<sub>max</sub> : ' + xmax.toFixed(3));
+    d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
+    d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
 }

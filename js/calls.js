@@ -110,6 +110,15 @@ function clearButtonCall() {
     genderContainer.node().selectedIndex = 0;
     environmentContainer.node().selectedIndex = 0;
     optogeneticsContainer.node().selectedIndex = 0;
+    d3.select('#infobox-x').text('X | 0.0');
+    d3.select('#infobox-y').text('Y | 0.0');
+    d3.select('#time-bar')
+        .transition()
+        .ease(d3.easePoly)
+        .duration(750)
+        .style('width', '0%');
+    d3.selectAll('#infobox-gender, #infobox-environment, #infobox-optogenetics').text('None');
+    d3.select('#infobox-link').text('Video');
     d3.selectAll('circle')
         .transition()
         .ease(d3.easePoly)
