@@ -106,47 +106,49 @@ function initScatter(dataset) {
                 .style('background', RED_COLOR);
         })
         .on('click', function(d, i) {
-            d3.select('#infobox-x').text('X | ' + d.x.toFixed(1));
-            d3.select('#infobox-y').text('Y | ' + d.y.toFixed(1));
-            d3.select('#time-bar')
-                .transition()
-                .ease(d3.easePoly)
-                .duration(750)
-                .style('width', generateTimePercentage(d.t, d.d));
-            d3.select('#infobox-gender')
-                .text(formatText(d.g));
-            d3.select('#infobox-environment')
-                .text(formatText(d.e));
-            d3.select('#infobox-optogenetics')
-                .text(formatText(d.o));
-            d3.select('#infobox-link')
-                .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
-            d3.select(this)
-                .transition()
-                .ease(d3.easePoly)
-                .duration(250)
-                .attr('r', CIRCLE_RADIUS_HOVER)
-                .attr("stroke", DEEPPINK_COLOR)
-                .attr("stroke-width", 2);
-            if (currCircle != null) {
-                currCircle
+            if (currCircle == null || !(currCircle.attr('cx') == d3.select(this).attr('cx') && currCircle.attr('cy') == d3.select(this).attr('cy'))) {
+                d3.select('#infobox-x').text('X | ' + d.x.toFixed(1));
+                d3.select('#infobox-y').text('Y | ' + d.y.toFixed(1));
+                d3.select('#time-bar')
                     .transition()
                     .ease(d3.easePoly)
-                    .duration(200)
-                    .attr("stroke", BLUE_COLOR)
-                    .attr("stroke-width", 1)
-                    .attr('r', CIRCLE_RADIUS_SMALL)
+                    .duration(750)
+                    .style('width', generateTimePercentage(d.t, d.d));
+                d3.select('#infobox-gender')
+                    .text(formatText(d.g));
+                d3.select('#infobox-environment')
+                    .text(formatText(d.e));
+                d3.select('#infobox-optogenetics')
+                    .text(formatText(d.o));
+                d3.select('#infobox-link')
+                    .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
+                d3.select(this)
                     .transition()
-                    .attr('r', CIRCLE_RADIUS_NORMAL)
-            }
+                    .ease(d3.easePoly)
+                    .duration(250)
+                    .attr('r', CIRCLE_RADIUS_HOVER)
+                    .attr("stroke", DEEPPINK_COLOR)
+                    .attr("stroke-width", 2);
+                if (currCircle != null) {
+                    currCircle
+                        .transition()
+                        .ease(d3.easePoly)
+                        .duration(200)
+                        .attr("stroke", BLUE_COLOR)
+                        .attr("stroke-width", 1)
+                        .attr('r', CIRCLE_RADIUS_SMALL)
+                        .transition()
+                        .attr('r', CIRCLE_RADIUS_NORMAL)
+                }
 
-            d3.select("#infobox-top")
-                .transition()
-                .ease(d3.easePoly)
-                .duration(300)
-                .style('background', BLUE_COLOR);
+                d3.select("#infobox-top")
+                    .transition()
+                    .ease(d3.easePoly)
+                    .duration(300)
+                    .style('background', BLUE_COLOR);
 
-            currCircle = d3.select(this);
+                currCircle = d3.select(this);
+            }  
         });
 
     /* Create x-axis */
@@ -221,47 +223,49 @@ function redrawScatter(dataset) {
                 .style('background', RED_COLOR);
         })
         .on('click', function(d, i) {
-            d3.select('#infobox-x').text('X | ' + d.x.toFixed(1));
-            d3.select('#infobox-y').text('Y | ' + d.y.toFixed(1));
-            d3.select('#time-bar')
-                .transition()
-                .ease(d3.easePoly)
-                .duration(750)
-                .style('width', generateTimePercentage(d.t, d.d));
-            d3.select('#infobox-gender')
-                .text(formatText(d.g));
-            d3.select('#infobox-environment')
-                .text(formatText(d.e));
-            d3.select('#infobox-optogenetics')
-                .text(formatText(d.o));
-            d3.select('#infobox-link')
-                .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
-            d3.select(this)
-                .transition()
-                .ease(d3.easePoly)
-                .duration(250)
-                .attr('r', CIRCLE_RADIUS_HOVER)
-                .attr("stroke", DEEPPINK_COLOR)
-                .attr("stroke-width", 2);
-            if (currCircle != null) {
-                currCircle
+            if (currCircle == null || !(currCircle.attr('cx') == d3.select(this).attr('cx') && currCircle.attr('cy') == d3.select(this).attr('cy'))) {
+                d3.select('#infobox-x').text('X | ' + d.x.toFixed(1));
+                d3.select('#infobox-y').text('Y | ' + d.y.toFixed(1));
+                d3.select('#time-bar')
                     .transition()
                     .ease(d3.easePoly)
-                    .duration(200)
-                    .attr("stroke", BLUE_COLOR)
-                    .attr("stroke-width", 1)
-                    .attr('r', CIRCLE_RADIUS_SMALL)
+                    .duration(750)
+                    .style('width', generateTimePercentage(d.t, d.d));
+                d3.select('#infobox-gender')
+                    .text(formatText(d.g));
+                d3.select('#infobox-environment')
+                    .text(formatText(d.e));
+                d3.select('#infobox-optogenetics')
+                    .text(formatText(d.o));
+                d3.select('#infobox-link')
+                    .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
+                d3.select(this)
                     .transition()
-                    .attr('r', CIRCLE_RADIUS_NORMAL)
+                    .ease(d3.easePoly)
+                    .duration(250)
+                    .attr('r', CIRCLE_RADIUS_HOVER)
+                    .attr("stroke", DEEPPINK_COLOR)
+                    .attr("stroke-width", 2);
+                if (currCircle != null) {
+                    currCircle
+                        .transition()
+                        .ease(d3.easePoly)
+                        .duration(200)
+                        .attr("stroke", BLUE_COLOR)
+                        .attr("stroke-width", 1)
+                        .attr('r', CIRCLE_RADIUS_SMALL)
+                        .transition()
+                        .attr('r', CIRCLE_RADIUS_NORMAL)
+                }
+
+                d3.select("#infobox-top")
+                    .transition()
+                    .ease(d3.easePoly)
+                    .duration(300)
+                    .style('background', BLUE_COLOR);
+
+                currCircle = d3.select(this);
             }
-
-            d3.select("#infobox-top")
-                .transition()
-                .ease(d3.easePoly)
-                .duration(300)
-                .style('background', BLUE_COLOR);
-
-            currCircle = d3.select(this);
         });
 
     d3.select('#circles')
