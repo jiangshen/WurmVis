@@ -2,7 +2,7 @@
 const DATA_PATH = "/data/all.json";
 
 /* Sampling */
-const SAMPLE_SIZE = 500;
+const SAMPLE_SIZE = 200;
 const HEATMAP_SAMPLE_SIZE = 10000;
 const IS_SAMPLING_HEATMAP = true;
 const FILTER_BY_SAMPLED = true;
@@ -35,13 +35,16 @@ const DEEPPINK_COLOR = "#FF1493";
 var svg = d3.select('#chart');
 var scatter_bar = d3.select('#scatter-bar');
 var gradientBar = d3.select('#gradient-bar').style('opacity', 0.0);
+var scatterPane = d3.select('#scatter-pane');
+var scatterSelectionPane = d3.select('#scatter-selection-pane');
 
 /* Variables */
 var xmin, ymin, xmax, ymax;
 var prev_time_percentage = 0;
 var scatter_bar_width = scatter_bar.style('width').slice(0, -2);
-var currState = "scatter";
-var currCircle;
+var currState = 'scatter';
+var scatterState = 'full';
+var currCircle = null;
 
 /* D3 Scales */
 var xScale = d3.scaleLinear().rangeRound([padding, w - padding * 2]);	

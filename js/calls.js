@@ -4,7 +4,8 @@ function scatterButtonCall() {
         d3.select("#heatmap").remove().exit();
         gradientBar.style("opacity", 0.0);
         toggleScatterBar('scatter');
-        
+        rollDownInfoBox();
+
         d3.select("#scatter-text")
             .style("font-weight", "bold")
             .style("font-variant", "small-caps")
@@ -25,6 +26,8 @@ function heatmapButtonCall() {
         toggleScatterBar('heatmap');
         d3.select("#circles").remove().exit();
         // d3.selectAll("#circles").exit().transition().duration(500).style("opacity", 0).remove();
+        // Roll Up Info Box
+        rollUpInfoBox();
         d3.select("#heatmap-text")
             .style("font-weight", "bold")
             .style("font-variant", "small-caps")
@@ -95,9 +98,12 @@ function selectionCall() {
             .attr("r", CIRCLE_RADIUS_HOVER)
             .transition()
             .attr("r", CIRCLE_RADIUS_NORMAL);
-                    
-        // alert("Selected: " + selection + ". This is " + size/SAMPLE_SIZE * 100 + "% of the population");
 
+        if (scatterState == 'full') {
+            refreshInfoBox(displayScatterSelectionInfo);
+            scatterState = 'selection';
+        }           
+        // alert("Selected: " + selection + ". This is " + size/SAMPLE_SIZE * 100 + "% of the population");z
     } else {
         alert('Please pick at least one attribute');
     }
@@ -110,6 +116,11 @@ function clearButtonCall() {
     genderContainer.node().selectedIndex = 0;
     environmentContainer.node().selectedIndex = 0;
     optogeneticsContainer.node().selectedIndex = 0;
+    currCircle = null;
+    if (scatterState == 'selection') {
+        refreshInfoBox(displayScatterInfo);
+        scatterState = 'full';
+    }
     d3.select('#infobox-x').text('X | 0.0');
     d3.select('#infobox-y').text('Y | 0.0');
     d3.select('#time-bar')

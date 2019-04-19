@@ -417,3 +417,56 @@ function updateMinMax(dataset) {
     d3.select('#y-min').html('y<sub>min</sub> : ' + ymin.toFixed(3));
     d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
 }
+
+function rollUpInfoBox() {
+    d3.select('#infobox-top')
+        .transition()
+        .ease(d3.easePoly)
+        .duration(300)
+        .style('height', '60px');
+    d3.select('#infobox')
+        .transition()
+        .ease(d3.easePoly)
+        .duration(150)
+        .style('height', '60px');
+}
+
+function rollDownInfoBox() {
+    d3.select('#infobox-top')
+        .transition()
+        .ease(d3.easePoly)
+        .duration(450)
+        .style('height', '125px');
+    d3.select('#infobox')
+        .transition()
+        .ease(d3.easePoly)
+        .duration(150)
+        .style('height', '582px');
+}
+
+function refreshInfoBox(fn) {
+    d3.select('#infobox-top')
+        .transition()
+        .ease(d3.easePoly)
+        .duration(650)
+        .style('height', '60px')
+        .on('end', function() {
+            fn();
+            rollDownInfoBox();
+        });
+    d3.select('#infobox')
+        .transition()
+        .ease(d3.easePoly)
+        .duration(150)
+        .style('height', '60px');
+}
+
+function displayScatterSelectionInfo() {
+    scatterPane.classed('hidden', true);
+    scatterSelectionPane.classed('hidden', false);
+}
+
+function displayScatterInfo() {
+    scatterPane.classed('hidden', false);
+    scatterSelectionPane.classed('hidden', true);
+}
