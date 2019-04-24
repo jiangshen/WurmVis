@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>WurmVis</title>
+        <link rel="stylesheet" href="css/select-css.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
 
@@ -16,13 +17,13 @@
                     </div>
                     <div id="scatter-bar">
                         <span class='separator-big'>|</span>
-                        <select id="genderContainer">
+                        <select class='select-css' id="genderContainer">
                             <option value="none">Select Gender</option>
                         </select>
-                        <select id="environmentContainer">
+                        <select class='select-css' id="environmentContainer">
                             <option value="none">Select Environment</option>
                         </select>
-                        <select id="optogeneticsContainer">
+                        <select class='select-css' id="optogeneticsContainer">
                             <option value="none">Select Optogenetics</option>
                         </select>
                         <button class="button button_violet" onclick="selectionCall()">Pick</button>
