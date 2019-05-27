@@ -40,7 +40,7 @@ function generateVideoEmbed(w, h, uid, starttime, autoplay, fullscreen) {
     return '<iframe width="' + w +
         '" height="' + h +
         '" src="https://www.youtube.com/embed/' + uid +
-        '?start=' + starttime +
+        '?start=' + starttime + '&end=' + (starttime + videoDuration) +
         '" frameborder="0" allow="accelerometer; ' + (autoplay ? 'autoplay; ' : '') +
         'encrypted-media; gyroscope; picture-in-picture"' +
         (fullscreen ? ' allowfullscreen' : '') + '></iframe>';

@@ -90,6 +90,10 @@ function selectionCall() {
 
         var selected = d3.selectAll(selection);
         var size = selected.size();
+        var selectedPercent = Math.round(size / SAMPLE_SIZE * 1000) / 10;
+        d3.select('#infobox-selection-amount')
+                .text(selectedPercent + '%');
+        drawPie(selectedPercent, 100 - selectedPercent);
         selected.transition()
             .ease(d3.easePoly)
             .duration(200)
@@ -103,7 +107,6 @@ function selectionCall() {
             refreshInfoBox(displayScatterSelectionInfo);
             scatterState = 'selection';
         }           
-        // alert("Selected: " + selection + ". This is " + size/SAMPLE_SIZE * 100 + "% of the population");z
     } else {
         alert('Please pick at least one attribute');
     }

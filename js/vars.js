@@ -2,9 +2,9 @@
 const DATA_PATH = "/data/all.json";
 
 /* Sampling */
-const SAMPLE_SIZE = 200;
+const SAMPLE_SIZE = 500;
 const HEATMAP_SAMPLE_SIZE = 10000;
-const IS_SAMPLING_HEATMAP = true;
+const IS_SAMPLING_HEATMAP = false;
 const FILTER_BY_SAMPLED = true;
 var all_data;
 var sampled_data;
@@ -17,6 +17,9 @@ var padding = 30;
 const legendW = 450;
 const legendH = 10;
 var margin = {top: 20, right: 30, bottom: 30, left: 40};
+const PIE_CHART_LENGTH = 320;
+const PIE_CHART_PADDING = 10;
+const PIE_CHART_OPACITY = 0.8;
 
 const CIRCLE_RADIUS_SMALL = 1.5;
 const CIRCLE_RADIUS_NORMAL = 3;
@@ -37,11 +40,13 @@ var scatter_bar = d3.select('#scatter-bar');
 var gradientBar = d3.select('#gradient-bar').style('opacity', 0.0);
 var scatterPane = d3.select('#scatter-pane');
 var scatterSelectionPane = d3.select('#scatter-selection-pane');
+var pieChart = d3.select('#pie-chart');
 
 /* Variables */
 var xmin, ymin, xmax, ymax;
 var prev_time_percentage = 0;
 var scatter_bar_width = scatter_bar.style('width').slice(0, -2);
+var videoDuration = 5;
 var currState = 'scatter';
 var scatterState = 'full';
 var currCircle = null;

@@ -24,6 +24,8 @@
     /* Dimensions */
     --chart-width: 950px;
     --chart-height: 700px;
+    --pie-chart-width: 320px;
+    --pie-chart-height: 320px;
 }
 
 body {
@@ -158,10 +160,15 @@ div #chart-container {
 }
 
 #chart {
-    height: var(--chart-height);
     width: var(--chart-width);
+    height: var(--chart-height);
     display: none;
     opacity: 0;
+}
+
+#pie-chart {
+    width: var(--pie-chart-width);
+    height: var(--pie-chart-height);
 }
 
 div #gradient-bar-container {

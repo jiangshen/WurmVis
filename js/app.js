@@ -122,6 +122,22 @@ function initScatter(dataset) {
                     .text(formatText(d.o));
                 d3.select('#infobox-link')
                     .html(generateVideoEmbed(320, 240, d.l, Math.round(d.t), true, false));
+                // if (scatterState == 'selection') {
+                //     genderContainer.node().selectedIndex = 0;
+                //     environmentContainer.node().selectedIndex = 0;
+                //     optogeneticsContainer.node().selectedIndex = 0;
+                //     refreshInfoBox(displayScatterInfo);
+                //     d3.selectAll('circle')
+                //         .transition()
+                //         .ease(d3.easePoly)
+                //         .duration(200)
+                //         .attr("stroke", BLUE_COLOR)
+                //         .attr("stroke-width", 1)
+                //         .attr("r", CIRCLE_RADIUS_SMALL)
+                //         .transition()
+                //         .attr("r", CIRCLE_RADIUS_NORMAL);
+                //     scatterState = 'full';
+                // }
                 d3.select(this)
                     .transition()
                     .ease(d3.easePoly)
@@ -284,7 +300,8 @@ function redrawHeatmap(dataset) {
     };
 
     /* Color Domain in points per square pixel */
-    color.domain([0, dataset.length / 30000]); // 50 looks pretty good
+    color.domain([0, 50]);
+    // color.domain([0, dataset.length / 30000]); // 50 looks pretty good
 
     updateMinMax(dataset);
 
@@ -403,6 +420,64 @@ function toggleScatterBar(dst_state) {
             .style('width', scatter_bar_width)
             .attr('display', 'none');
     }
+}
+
+function drawPie(a, b) {
+
+    /* Remove any previous children */
+    pieChart.selectAll("*").remove();
+
+    let radius = Math.min(PIE_CHART_LENGTH - PIE_CHART_PADDING, PIE_CHART_LENGTH - PIE_CHART_PADDING) / 2;
+    let arc = d3.arc().innerRadius(0).outerRadius(radius);
+    let c = d3.scaleOrdinal(d3.schemeCategory10);
+
+    var g = pieChart.append('g').attr('transform', 'translate(' + (PIE_CHART_LENGTH / 2) + ',' + (PIE_CHART_LENGTH / 2) + ')');
+    var pie = d3.pie()
+        .value(function(d) { return d.value; })
+        .sort(null);
+
+    var data = [
+        {name: "Selected", value: a},
+        {name: "Rest", value: b},
+    ];
+    
+    var path = g.selectAll('path')
+        .data(pie(data))
+        .enter()
+        .append("g")  
+        .append('path')
+        .attr('d', arc)
+        .attr('fill', (d,i) => c(i))
+        .style('opacity', PIE_CHART_OPACITY)
+        .style('stroke', 'white')
+        .on("mouseover", function(d) {
+            d3.selectAll('path')
+              .style("opacity", PIE_CHART_OPACITY);
+            d3.select(this) 
+              .style("opacity", 1);
+      
+            let g = pieChart
+              .style("cursor", "pointer")
+              .append("g")
+              .attr("class", "tooltip")
+              .style("opacity", 0);
+       
+            g.append("text")
+              .attr("class", "name-text")
+              .text(`${d.data.name} (${d.data.value})`)
+              .attr('text-anchor', 'middle');
+          
+            let text = g.select("text");
+            let bbox = text.node().getBBox();
+            let padding = 2;
+            g.insert("rect", "text")
+              .attr("x", bbox.x - padding)
+              .attr("y", bbox.y - padding)
+              .attr("width", bbox.width + (padding*2))
+              .attr("height", bbox.height + (padding*2))
+              .style("fill", "white")
+              .style("opacity", 0.75);
+          })
 }
 
 function updateMinMax(dataset) {
