@@ -69,6 +69,12 @@ body {
     width: 100%;
 }
 
+/* Margins */
+.margin-horizontal-8 {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
 /* Font */
 .xlarge {
     font-size: var(--xbig-font-size);
