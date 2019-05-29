@@ -56,6 +56,7 @@ var gradientBar = d3.select('#gradient-bar').style('opacity', 0.0);
 var scatterPane = d3.select('#scatter-pane');
 var scatterSelectionPane = d3.select('#scatter-selection-pane');
 var pieChart = d3.select('#pie-chart');
+var colorContainer = d3.select('#colorContainer');
 
 /**
  * Variables
@@ -71,9 +72,30 @@ var currCircle = null;
  * Dictionaries
  */
 var colorCodeToD3 = {
-    'C1': d3.interpolateBuPu,
+    'C0': d3.interpolateBuPu,
+    'C1': d3.interpolateBuGn,
     'C2': d3.interpolateGnBu,
-    'C3': d3.interpolateOrRd
+    'C3': d3.interpolateOrRd,
+    'C4': d3.interpolatePuBuGn,
+    'C5': d3.interpolatePuBu,
+    'C6': d3.interpolatePuRd,
+    'C7': d3.interpolateRdPu,
+    'C8': d3.interpolateYlGnBu,
+    'C9': d3.interpolateYlGn,
+    'CA': d3.interpolateYlOrBr,
+    'CB': d3.interpolateYlOrRd,
+    'CC': d3.interpolateBlues,
+    'CD': d3.interpolateGreens,
+    'CE': d3.interpolateGreys,
+    'CF': d3.interpolateOranges,
+    'D0': d3.interpolatePurples,
+    'D1': d3.interpolateReds,
+    'D2': d3.interpolateViridis,
+    'D3': d3.interpolateMagma,
+    'D4': d3.interpolatePlasma,
+    'D5': d3.interpolateWarm,
+    'D6': d3.interpolateCool,
+    'D7': d3.interpolateRainbow
 }
 
 /**
@@ -90,7 +112,7 @@ var xAxis, yAxis;
 /**
  * Heatmap Color Range
 */
-var color = d3.scaleSequential(d3.interpolateBuPu);
+var color = d3.scaleSequential(colorCodeToD3['C0']);
 
 /**
  * Heatmap Contours
@@ -117,3 +139,4 @@ for (i = 0; i <= gradient_granularity; i++) {
         .attr('offset', i / gradient_granularity)
         .attr('stop-color', color(i / gradient_granularity));
 }
+// TODO how to generate new color here ???

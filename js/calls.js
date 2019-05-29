@@ -37,9 +37,6 @@ function heatmapButtonCall() {
             .style("font-variant", "normal")
             .text("Scatter");
 
-        d3.select("#topbar_line")
-            .append('svg')
-            .attr("fill", ORANGE_COLOR);
         gradientBar.transition()
             .ease(d3.easePoly)
             .duration(750)
@@ -143,3 +140,9 @@ function clearButtonCall() {
         .transition()
         .attr("r", CIRCLE_RADIUS_NORMAL);
 }
+
+colorContainer.on('change', function() {
+    color = d3.scaleSequential(colorCodeToD3[colorContainer.property('value')])
+    d3.select("#heatmap").remove().exit();
+    recolorHeatmap();
+});
