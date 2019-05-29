@@ -9,7 +9,7 @@
 	/* width: 100%; */
 	/* max-width: 100%; /* useful when width is set to anything other than 100% */
 	box-sizing: border-box;
-	margin: 0;
+	margin: 2px;
 	border: 2px solid #748495;
 	/* box-shadow: 0 1px 0 1px rgba(0,0,0,.04); */
 	border-radius: 4pt;

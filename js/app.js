@@ -362,7 +362,6 @@ function redrawHeatmap(dataset) {
         .data(contours)
         .enter().append("path")
         .attr("fill", function(d) {
-            console.log(d.value);
             return color(d.value);
         })
         .attr("d", d3.geoPath());
@@ -436,18 +435,27 @@ function updateScatter(dataset) {
  */
 function toggleScatterBar(dst_state) {
     if (dst_state == 'heatmap') {
-        scatter_bar
-            .transition()
+        scatter_bar.transition()
             .ease(d3.easePoly)
-            .duration(750)
-            .style('width', '0px');  
+            .duration(500)
+            .style('opacity', 0);
+        scatter_bar.style('display', 'none');
+        heatmap_bar.style('display', 'flex');
+        heatmap_bar.transition() 
+            .ease(d3.easePoly)
+            .duration(500)
+            .style('opacity', 1);
     } else {
-        scatter_bar
-            .transition()
+        heatmap_bar.transition()
             .ease(d3.easePoly)
-            .duration(750)
-            .style('width', scatter_bar_width)
-            .attr('display', 'none');
+            .duration(500)
+            .style('opacity', 0);
+        heatmap_bar.style('display', 'none');
+        scatter_bar.style('display', 'flex');
+        scatter_bar.transition()
+            .ease(d3.easePoly)
+            .duration(500)
+            .style('opacity', 1);
     }
 }
 

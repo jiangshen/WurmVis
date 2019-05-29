@@ -116,9 +116,9 @@ sub {
     font-size: var(--small-font-size);
 }
 
-.topbar {
+.top-bar {
     background: var(--topbar-grey-color);
-    padding: 8px;
+    padding: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0, 0.24), 0 1px 2px rgba(0,0,0, 0.36);
 }
 
@@ -142,17 +142,25 @@ sub {
     font-weight: bold;
 }
 
+.topbar-text {
+    margin-right: 4px;
+    font-size: var(--big-font-size);
+    font-variant: small-caps;
+    color: var(--white-color);
+}
+
 .separator-big {
     color: var(--light-grey-color);
     font-size: var(--big-font-size);
     margin-left: 4px;
+    margin-right: 4px;
 }
 
 .separator-normal {
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 4px;
-    padding-right: 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 4px;
+    margin-right: 4px;
     color: var(--light-grey-color);
     font-size: var(--normal-font-size);
 }
@@ -194,8 +202,9 @@ div #gradient-bar {
 }
 
 div #bottom-bar {
+    margin-left: 6px;
     margin-top: 2px;
-    margin-left: 4px;
+    margin-bottom: 2px;
     height: 0px;
     overflow: hidden;
     white-space: nowrap;
@@ -203,6 +212,10 @@ div #bottom-bar {
 
 .hidden {
     display: none;
+}
+
+.invisible {
+    opacity: 0;
 }
 
 .pane {
@@ -245,7 +258,15 @@ div #infobox-top {
 }
 
 div #scatter-bar {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+div #heatmap-bar {
+    display: flex;
+    align-items: center;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -258,7 +279,8 @@ div #time-bar {
 }
 
 div #main-bar {
-    display: inline-block;
+    display: flex;
+    align-items: center;
 }
 
 /* D3 Elements */

@@ -8,11 +8,11 @@ const DATA_PATH = "/data/all.json";
  * Sampling 
 */
 /* Change the sample size for the scatter plot */
-const SAMPLE_SIZE = 500;
+const SAMPLE_SIZE = 200;
 /* Toggle whether the heatmap is displaying a sample of data or not */
-const IS_SAMPLING_HEATMAP = false;
+const IS_SAMPLING_HEATMAP = true;
 /* Change the sample size for the heatmap */
-const HEATMAP_SAMPLE_SIZE = 3000;
+const HEATMAP_SAMPLE_SIZE = 10;
 const FILTER_BY_SAMPLED = true;
 var all_data;
 var sampled_data;
@@ -51,6 +51,7 @@ const DEEPPINK_COLOR = "#FF1493";
 */
 var svg = d3.select('#chart');
 var scatter_bar = d3.select('#scatter-bar');
+var heatmap_bar = d3.select('#heatmap-bar');
 var gradientBar = d3.select('#gradient-bar').style('opacity', 0.0);
 var scatterPane = d3.select('#scatter-pane');
 var scatterSelectionPane = d3.select('#scatter-selection-pane');
@@ -61,11 +62,19 @@ var pieChart = d3.select('#pie-chart');
 */
 var xmin, ymin, xmax, ymax;
 var prev_time_percentage = 0;
-var scatter_bar_width = scatter_bar.style('width').slice(0, -2);
 var videoDuration = 5;
 var currState = 'scatter';
 var scatterState = 'full';
 var currCircle = null;
+
+/**
+ * Dictionaries
+ */
+var colorCodeToD3 = {
+    'C1': d3.interpolateBuPu,
+    'C2': d3.interpolateGnBu,
+    'C3': d3.interpolateOrRd
+}
 
 /**
  * D3 Scales
