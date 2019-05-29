@@ -7,12 +7,11 @@ const DATA_PATH = "/data/all.json";
 /**
  * Sampling 
 */
-/* Change the sample size for the scatter plot */
+/* Change the sample size */
 const SAMPLE_SIZE = 200;
 /* Toggle whether the heatmap is displaying a sample of data or not */
-const IS_SAMPLING_HEATMAP = true;
-/* Change the sample size for the heatmap */
-const HEATMAP_SAMPLE_SIZE = 10;
+const IS_SAMPLING_HEATMAP = false;
+/* Toggle whether the heatmap is filtering data by a sample */
 const FILTER_BY_SAMPLED = true;
 var all_data;
 var sampled_data;
