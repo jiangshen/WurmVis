@@ -1,16 +1,26 @@
-/* Data Path */
+/**
+ * Data Path
+ */
+/* This is the only data input the app needs, load your entire dataset here */
 const DATA_PATH = "/data/all.json";
 
-/* Sampling */
+/**
+ * Sampling 
+*/
+/* Change the sample size for the scatter plot */
 const SAMPLE_SIZE = 500;
-const HEATMAP_SAMPLE_SIZE = 1000;
-const IS_SAMPLING_HEATMAP = true;
+/* Toggle whether the heatmap is displaying a sample of data or not */
+const IS_SAMPLING_HEATMAP = false;
+/* Change the sample size for the heatmap */
+const HEATMAP_SAMPLE_SIZE = 3000;
 const FILTER_BY_SAMPLED = true;
 var all_data;
 var sampled_data;
 var SAMPLED_XMIN, SAMPLED_XMAX, SAMPLED_YMIN, SAMPLED_YMAX;
 
-/* Dimensions */
+/**
+ * Dimensions
+*/
 const w = 1000;
 const h = 700;
 var padding = 30;
@@ -25,7 +35,9 @@ const CIRCLE_RADIUS_SMALL = 1.5;
 const CIRCLE_RADIUS_NORMAL = 3;
 const CIRCLE_RADIUS_HOVER = 5;
 
-/* Colors */
+/**
+ * Colors
+*/
 const TRANSPARENT_COLOR = "#FFFFFF00";
 const RED_COLOR = "#F44336";
 const ORANGE_COLOR = "#FF9919";
@@ -34,7 +46,9 @@ const BLUE_COLOR = "#3498DB";
 const PURPLE_COLOR = "#8F5E99";
 const DEEPPINK_COLOR = "#FF1493";
 
-/* Elements */
+/**
+ * Elements
+*/
 var svg = d3.select('#chart');
 var scatter_bar = d3.select('#scatter-bar');
 var gradientBar = d3.select('#gradient-bar').style('opacity', 0.0);
@@ -42,7 +56,9 @@ var scatterPane = d3.select('#scatter-pane');
 var scatterSelectionPane = d3.select('#scatter-selection-pane');
 var pieChart = d3.select('#pie-chart');
 
-/* Variables */
+/**
+ * Variables
+*/
 var xmin, ymin, xmax, ymax;
 var prev_time_percentage = 0;
 var scatter_bar_width = scatter_bar.style('width').slice(0, -2);
@@ -51,24 +67,34 @@ var currState = 'scatter';
 var scatterState = 'full';
 var currCircle = null;
 
-/* D3 Scales */
+/**
+ * D3 Scales
+*/
 var xScale = d3.scaleLinear().rangeRound([padding, w - padding * 2]);	
 var yScale = d3.scaleLinear().rangeRound([h - padding, padding]);
 
-/* D3 X and Y axis */
+/**
+ * D3 X and Y axis
+*/
 var xAxis, yAxis;
 
-/* Heatmap Color Range */
+/**
+ * Heatmap Color Range
+*/
 var color = d3.scaleSequential(d3.interpolateBuPu);
 
-/* Heatmap Contours */
+/**
+ * Heatmap Contours
+*/
 var contours = null;
 
 var genderContainer = d3.select("#genderContainer");
 var environmentContainer = d3.select("#environmentContainer");
 var optogeneticsContainer = d3.select("#optogeneticsContainer");
 
-/* Gradient Definition */
+/**
+ * Gradient Definition
+*/
 var defs = svg.append('defs');
 var linearGradient = defs.append('linearGradient')
     .attr('id', 'linear-gradient')

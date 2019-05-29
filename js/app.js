@@ -56,6 +56,10 @@ d3.json(DATA_PATH, function(d) {
     initScatter(sampled_data);
 });
 
+/**
+ * Initializes the scatterplot with given data
+ * @param {Object[]} dataset The data array
+ */
 function initScatter(dataset) {
     updateMinMax(dataset);
 
@@ -180,28 +184,32 @@ function initScatter(dataset) {
         .call(yAxis);
 }
 
+/**
+ * Updates the scatterplot with new data
+ * @param {Object[]} dataset The data array
+ */
 function redrawScatter(dataset) {
     updateMinMax(dataset);
 
-    // Update Scale domains
+    /* Update Scale domains */
     xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
     yScale.domain(d3.extent(dataset, function (d) { return d.y; })).nice();
 
-    // Update X axis
+    /* Update X axis */
     svg.select(".x.axis")
         .transition()
         .ease(d3.easePoly)
         .duration(750)
         .call(xAxis);
 
-    // Update Y axis
+    /* Update Y axis */
     svg.select(".y.axis")
         .transition()
         .ease(d3.easePoly)
         .duration(750)
         .call(yAxis);
 
-    // Create Scatter
+    /* Create Scatter */
     svg.append("g")
         .style("opacity", 0.0)
         .attr("id", "circles")
@@ -291,6 +299,10 @@ function redrawScatter(dataset) {
         .style("opacity", 1.0);
 }
 
+/**
+ * Updates heatmap with given data
+ * @param {Object[]} dataset The data array
+ */
 function redrawHeatmap(dataset) {
     /* Filter based on sampled data */
     if (FILTER_BY_SAMPLED) {
@@ -363,6 +375,10 @@ function redrawHeatmap(dataset) {
         .style("opacity", 1.0);
 }
 
+/**
+ * Updates the scatterplot with new data
+ * @param {Object[]} dataset The data array
+ */
 function updateScatter(dataset) {
     updateMinMax(dataset)
 
@@ -514,6 +530,9 @@ function updateMinMax(dataset) {
     d3.select('#y-max').html('y<sub>max</sub> : ' + ymax.toFixed(3));
 }
 
+/**
+ * Animation that rolls up the information box
+ */
 function rollUpInfoBox() {
     d3.select('#infobox-top')
         .transition()
@@ -527,6 +546,9 @@ function rollUpInfoBox() {
         .style('height', '60px');
 }
 
+/**
+ * Animation that rolls down the information box
+ */
 function rollDownInfoBox() {
     d3.select('#infobox-top')
         .transition()

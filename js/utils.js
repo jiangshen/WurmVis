@@ -46,6 +46,12 @@ function generateVideoEmbed(w, h, uid, starttime, autoplay, fullscreen) {
         (fullscreen ? ' allowfullscreen' : '') + '></iframe>';
 }
 
+/**
+ * Outputs a time formatted as percentage
+ * @param {number} currtime The current time
+ * @param {number} totaltime The total duration
+ * @returns {string} Formatted time as percentage
+ */
 function generateTimePercentage(currtime, totaltime) {
     let p = Math.round(currtime / totaltime * 100);
     if (p < 3) p = 3;
