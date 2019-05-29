@@ -11,7 +11,7 @@ const DATA_PATH = "/data/all.json";
 const SAMPLE_SIZE = 200;
 /* Toggle whether the heatmap is displaying a sample of data or not */
 const IS_SAMPLING_HEATMAP = false;
-/* Toggle whether the heatmap is filtering data by a sample */
+/* Toggle whether the heatmap is filtering data bounds by a sample */
 const FILTER_BY_SAMPLED = true;
 var all_data;
 var sampled_data;
@@ -66,6 +66,7 @@ var videoDuration = 5;
 var currState = 'scatter';
 var scatterState = 'full';
 var currCircle = null;
+var QUICK_SWITCH_MODE = false;
 
 /**
  * Dictionaries

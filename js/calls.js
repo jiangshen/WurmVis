@@ -16,6 +16,7 @@ function scatterButtonCall() {
             .text("Heatmap");
 
         redrawScatter(sampled_data);
+        QUICK_SWITCH_MODE = true;
         currState = "scatter";
     }
 }
@@ -61,6 +62,7 @@ function updateButtonCall() {
         SAMPLED_YMAX = d3.max(sampled_data, function(d) { return d.y });
 
         updateScatter(sampled_data);
+        QUICK_SWITCH_MODE = false;
     }
 }
 
