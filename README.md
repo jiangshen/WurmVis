@@ -15,6 +15,13 @@
 - Choose from displaying the entire dataset or a sample of it
 - Easily change visualization colors from the toolbar
 
+## Setup
+
+- Navigate to `vars.js` file **`js`** folder
+	- Set your data file path in `DATA_PATH`
+	- Set your sample size in `SAMPLE_SIZE`
+	- Toggle whether heatmap displays the sampled version with `IS_SAMPLING_HEATMAP`
+
 ## Demo
 
 Try it [here]()! *(future website)*
