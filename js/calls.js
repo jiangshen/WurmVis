@@ -1,3 +1,17 @@
+/**
+ * Listeners
+ */
+colorContainer.on('change', function() {
+    color = d3.scaleSequential(colorCodeToD3[colorContainer.property('value')]);
+    recolorHeatmap();
+});
+genderContainer.on('change', selectionCall);
+environmentContainer.on('change', selectionCall);
+optogeneticsContainer.on('change', selectionCall);
+
+/**
+ * Handles scatter plot generation
+ */
 function scatterButtonCall() {
     if (currState == "heatmap") {
         /* Remove Heatmap and add in Scatter Bar */
@@ -21,6 +35,9 @@ function scatterButtonCall() {
     }
 }
 
+/**
+ * Handles heatmap generation
+ */
 function heatmapButtonCall() {
     if (currState == "scatter") {
         /* Remove Scatter Plot and Scatter Bar */
@@ -52,6 +69,9 @@ function heatmapButtonCall() {
     }
 }
 
+/**
+ * Updates the scatter plot with a new sample
+ */
 function updateButtonCall() {
     if (currState == "scatter") {
         sampled_data = sample(all_data, SAMPLE_SIZE);
@@ -66,6 +86,9 @@ function updateButtonCall() {
     }
 }
 
+/**
+ * Perform selection based on attributes selected
+ */
 function selectionCall() {
     var g = genderContainer.property('value');
     var e = environmentContainer.property('value');
@@ -105,9 +128,9 @@ function selectionCall() {
         if (scatterState == 'full') {
             refreshInfoBox(displayScatterSelectionInfo);
             scatterState = 'selection';
-        }           
+        }      
     } else {
-        alert('Please pick at least one attribute');
+        clearButtonCall();
     }
 }
 
@@ -142,8 +165,3 @@ function clearButtonCall() {
         .transition()
         .attr("r", CIRCLE_RADIUS_NORMAL);
 }
-
-colorContainer.on('change', function() {
-    color = d3.scaleSequential(colorCodeToD3[colorContainer.property('value')])
-    recolorHeatmap();
-});
