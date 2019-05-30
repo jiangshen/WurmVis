@@ -516,7 +516,7 @@ function drawPie(a, b) {
 
     let radius = Math.min(PIE_CHART_LENGTH - PIE_CHART_PADDING, PIE_CHART_LENGTH - PIE_CHART_PADDING) / 2;
     let arc = d3.arc().innerRadius(0).outerRadius(radius);
-    let c = d3.scaleOrdinal(d3.schemeCategory10);
+    let c = [PURPLE_COLOR, BLUE_COLOR];
 
     var g = pieChart.append('g').attr('transform', 'translate(' + (PIE_CHART_LENGTH / 2) + ',' + (PIE_CHART_LENGTH / 2) + ')');
     var pie = d3.pie()
@@ -534,7 +534,7 @@ function drawPie(a, b) {
         .append("g")  
         .append('path')
         .attr('d', arc)
-        .attr('fill', (d,i) => c(i))
+        .attr('fill', (d,i) => c[i])
         .style('opacity', PIE_CHART_OPACITY)
         .style('stroke', 'white')
         .on("mouseover", function(d) {
