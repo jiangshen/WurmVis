@@ -50,7 +50,8 @@ function initScatter(dataset) {
     d3.select('#bottom-bar')
         .transition()
         .ease(d3.easePoly)
-        .duration(250)
+        .delay(350)
+        .duration(500)
         .style('height', '20px');
 
     xScale.domain(d3.extent(dataset, function (d) { return d.x; })).nice();
@@ -504,7 +505,7 @@ function drawPie(a, b) {
         {name: "Rest", value: b},
     ];
     
-    var path = g.selectAll('path')
+    g.selectAll('path')
         .data(pie(data))
         .enter()
         .append("g")  
@@ -540,7 +541,7 @@ function drawPie(a, b) {
               .attr("height", bbox.height + (padding*2))
               .style("fill", "white")
               .style("opacity", 0.75);
-          })
+        });
 }
 
 /**
