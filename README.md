@@ -17,6 +17,10 @@
 
 ## Demo
 
+Try it [here]()! *(future website)*
+
+## Screenshots
+
 ### Explore datasets with ease and context
 ![Main Scatterplot Screen](img/scatter-alone.png)
 
