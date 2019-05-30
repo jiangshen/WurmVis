@@ -145,6 +145,5 @@ function clearButtonCall() {
 
 colorContainer.on('change', function() {
     color = d3.scaleSequential(colorCodeToD3[colorContainer.property('value')])
-    d3.select("#heatmap").remove().exit();
     recolorHeatmap();
 });

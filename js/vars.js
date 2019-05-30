@@ -58,6 +58,13 @@ var pieChart = d3.select('#pie-chart');
 var colorContainer = d3.select('#colorContainer');
 
 /**
+ * Animation Duration
+ */
+const ANIM_TIME_SHORT = 250;
+const ANIM_TIME_MEDIUM = 500;
+const ANIM_TIME_LONG = 750;
+
+/**
  * Variables
 */
 var xmin, ymin, xmax, ymax;
@@ -67,6 +74,9 @@ var currState = 'scatter';
 var scatterState = 'full';
 var currCircle = null;
 var QUICK_SWITCH_MODE = false;
+var gradient_granularity = 10;
+var gradientScale = d3.scaleLinear().domain([0, 1]).range([0, 1]);
+const GRADIENT_STOPS = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
 
 /**
  * Dictionaries
@@ -127,16 +137,21 @@ var optogeneticsContainer = d3.select("#optogeneticsContainer");
  * Gradient Definition
 */
 var defs = svg.append('defs');
-var linearGradient = defs.append('linearGradient')
-    .attr('id', 'linear-gradient')
-    .attr('x1', '0%')
-    .attr('y1', '100%')
-    .attr('x2', "0%")
-    .attr('y2', "0%");
-var gradient_granularity = 50;
-for (i = 0; i <= gradient_granularity; i++) {
-    linearGradient.append('stop')
-        .attr('offset', i / gradient_granularity)
-        .attr('stop-color', color(i / gradient_granularity));
+createGradient();
+
+/**
+ * Create gradient based on selected color map
+ */
+function createGradient() {
+    var linearGradient = defs.append('linearGradient')
+        .attr('id', 'linear-gradient')
+        .attr('x1', '0%')
+        .attr('y1', '100%')
+        .attr('x2', "0%")
+        .attr('y2', "0%");
+    for (i = 0; i <= gradient_granularity; i++) {
+        linearGradient.append('stop')
+            .attr('offset', GRADIENT_STOPS[i])
+            .attr('stop-color', color(gradientScale(GRADIENT_STOPS[i])));
+    }
 }
-// TODO how to generate new color here ???

@@ -81,8 +81,8 @@
                 <img id='ripple' src="res/ripple.svg" width="150px" height="150px"/>
                 <svg id='chart'></svg>
                 <div id='gradient-bar'>
-                    <svg class='fill-vertical fill-horizontal'>
-                        <rect class='fill-vertical fill-horizontal' style='fill: url("#linear-gradient");'></rect>
+                    <svg id='gradient-fill-container' class='fill'>
+                        <rect id='gradient-fill' class='fill' style='fill: url("#linear-gradient");'></rect>
                     </svg>
                 </div>
             </div>
@@ -136,7 +136,6 @@
                     </div>
                     <hr>
                     <svg id='pie-chart'></svg>
-                    <hr>
                 </div>
             </div>
         </div>

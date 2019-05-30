@@ -68,6 +68,10 @@ body {
 .fill-horizontal {
     width: 100%;
 }
+.fill {
+    height: 100%;
+    width: 100%;
+}
 
 /* Margins */
 .margin-horizontal-8 {
