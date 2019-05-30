@@ -1,22 +1,6 @@
 /* Init with scatterplot */
 d3.json(DATA_PATH, function(d) {
 
-    /**
-     * Takes Strain info 
-     */
-    // d3.map(d.data, function(d){ return d.strain; }).keys().forEach(strain => {
-    //     strainContainer.append("button")
-    //         .attr("class", "button button_violet")
-    //         .attr("onclick", "strainButtonCall('" + strain + "')")
-    //         .text(strain);
-    // });
-
-    // !! Temp D3 Getting Strain Distributions
-    // var strainCount = d3.nest()
-    //     .key(function(d) {return d.strain;})
-    //     .rollup(function(v) {return v.length;})
-    //     .entries(d.data);
-
     all_data = d;
     sampled_data = sample(d, SAMPLE_SIZE);
 
@@ -318,7 +302,6 @@ function redrawHeatmap(dataset) {
      *  - New sample requested and FILTER_BY_SAMPLED is ON
      */
     if (contours == null || (FILTER_BY_SAMPLED && !QUICK_SWITCH_MODE)) {
-        console.log('ye called');
         contours = d3.contourDensity()
             .x(function(d) {
                 return xScale(d.x);
