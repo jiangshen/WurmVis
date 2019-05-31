@@ -551,28 +551,6 @@ function drawPie(a, b) {
               .style("opacity", PIE_CHART_OPACITY);
             d3.select(this) 
               .style("opacity", 1);
-      
-            let g = pieChart
-              .style("cursor", "pointer")
-              .append("g")
-              .attr("class", "tooltip")
-              .style("opacity", 0);
-       
-            g.append("text")
-              .attr("class", "name-text")
-              .text(`${d.data.name} (${d.data.value})`)
-              .attr('text-anchor', 'middle');
-          
-            let text = g.select("text");
-            let bbox = text.node().getBBox();
-            let padding = 2;
-            g.insert("rect", "text")
-              .attr("x", bbox.x - padding)
-              .attr("y", bbox.y - padding)
-              .attr("width", bbox.width + (padding*2))
-              .attr("height", bbox.height + (padding*2))
-              .style("fill", "white")
-              .style("opacity", 0.75);
         });
 }
 
