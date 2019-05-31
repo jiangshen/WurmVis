@@ -152,14 +152,12 @@ sub {
     margin-right: 8px;
     color: var(--white-color);
     font-size: 24px;
-    /* font-variant: small-caps; */
     font-weight: bold;
 }
 
 .topbar-text {
     margin-right: 4px;
     font-size: var(--big-font-size);
-    font-variant: small-caps;
     color: var(--white-color);
 }
 
