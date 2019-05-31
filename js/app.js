@@ -1,8 +1,14 @@
 /* Init with scatterplot */
 d3.json(DATA_PATH, function(d) {
-
+    /**
+     * Populate data and attributes
+     */
     all_data = d;
     sampled_data = sample(d, SAMPLE_SIZE);
+    SAMPLED_XMIN = d3.min(sampled_data, function(d) { return d.x });
+    SAMPLED_XMAX = d3.max(sampled_data, function(d) { return d.x });
+    SAMPLED_YMIN = d3.min(sampled_data, function(d) { return d.y });
+    SAMPLED_YMAX = d3.max(sampled_data, function(d) { return d.y });
 
     /** 
      *  Takes Gender, Environment and Optogenetics info
@@ -22,10 +28,7 @@ d3.json(DATA_PATH, function(d) {
             .attr("value", optogenetics)
             .text(formatText(optogenetics));
     });
-    SAMPLED_XMIN = d3.min(sampled_data, function(d) { return d.x });
-    SAMPLED_XMAX = d3.max(sampled_data, function(d) { return d.x });
-    SAMPLED_YMIN = d3.min(sampled_data, function(d) { return d.y });
-    SAMPLED_YMAX = d3.max(sampled_data, function(d) { return d.y });
+    
     d3.select('#ripple')
         .transition()
         .ease(d3.easePoly)

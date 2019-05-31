@@ -68,6 +68,9 @@ body {
 .fill-horizontal {
     width: 100%;
 }
+.slot-horizontal {
+    width: 8px;
+}
 .fill {
     height: 100%;
     width: 100%;
@@ -189,13 +192,12 @@ div #chart-container {
     height: var(--pie-chart-height);
 }
 
-/* div #gradient-bar-container {
-    height: 100%;
-    width: 8px;
+div #gradient-bar-container {
+    height: var(--chart-height);
     display: flex;
     flex-direction: column;
     justify-content: center;
-} */
+}
 
 div #gradient-bar {
     height: 50%;
