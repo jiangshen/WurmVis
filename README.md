@@ -1,6 +1,6 @@
 # WurmVis
 
-> Exploring novel ways to display complex data with D3
+> Exploring novel ways to display big datasets with D3
 
 ## Features
 
@@ -31,5 +31,11 @@ Try it [here]()! *(future website)*
 ### Explore datasets with ease and context
 ![Main Scatterplot Screen](img/scatter-alone.png)
 
-### Group data with similar attributes
+### Find data via attributes
 ![Scatterplot Selection Screen](img/scatter-group.png)
+
+### Visualize all in glorious heatmap
+![Heatmap Default Color](img/heatmap-default.png)
+
+### And change color to your liking!
+![Heatmap Rainbow Color](img/heatmap-rainbow.png)

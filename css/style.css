@@ -158,6 +158,7 @@ sub {
 .topbar-text {
     margin-right: 4px;
     font-size: var(--big-font-size);
+    font-variant: small-caps;
     color: var(--white-color);
 }
 
