@@ -62,6 +62,14 @@ function initScatter(dataset) {
     xAxis = d3.axisBottom(xScale).ticks(5);
     yAxis = d3.axisLeft(yScale).ticks(5);
 
+    gScale.domain([0, 1]);
+    gAxis = d3.axisRight(gScale).ticks(8);
+    /* Update G axis */
+    gAxisSvg.append("g")
+        .attr("class", "gaxis")
+        .attr("transform", "translate(0," + gpadding + ")")
+        .call(gAxis);
+
     /* Create circles */
     svg.append("g")
         .attr("id", "circles")
@@ -398,8 +406,6 @@ function recolorHeatmap() {
             return color(d.value);
         })
         .attr("d", d3.geoPath());
-
-    
 
     /* Generate the new legend and display it */
     d3.select("#linear-gradient").remove().exit();

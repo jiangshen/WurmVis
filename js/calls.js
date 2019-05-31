@@ -17,6 +17,7 @@ function scatterButtonCall() {
         /* Remove Heatmap and add in Scatter Bar */
         d3.select("#heatmap").remove().exit();
         gradientBar.style("opacity", 0.0);
+        gAxisSvg.style("opacity", 0.0);
         toggleScatterBar('scatter');
         rollDownInfoBox();
 
@@ -44,7 +45,6 @@ function heatmapButtonCall() {
         toggleScatterBar('heatmap');
         d3.select("#circles").remove().exit();
         // d3.selectAll("#circles").exit().transition().duration(500).style("opacity", 0).remove();
-        // Roll Up Info Box
         rollUpInfoBox();
         d3.select("#heatmap-text")
             .style("font-weight", "bold")
@@ -56,6 +56,10 @@ function heatmapButtonCall() {
             .text("Scatter");
 
         gradientBar.transition()
+            .ease(d3.easePoly)
+            .duration(750)
+            .style("opacity", 1.0);
+        gAxisSvg.transition()
             .ease(d3.easePoly)
             .duration(750)
             .style("opacity", 1.0);
@@ -113,8 +117,8 @@ function selectionCall() {
         var selected = d3.selectAll(selection);
         var size = selected.size();
         var selectedPercent = Math.round(size / SAMPLE_SIZE * 1000) / 10;
-        d3.select('#infobox-selection-amount')
-                .text(selectedPercent + '%');
+        d3.select('#infobox-selection-amount').text(selectedPercent + '%');
+        d3.select('#infobox-rest-amount').text((100.0 - selectedPercent) + '%');
         drawPie(selectedPercent, 100 - selectedPercent);
         selected.transition()
             .ease(d3.easePoly)

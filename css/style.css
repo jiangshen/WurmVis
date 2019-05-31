@@ -24,6 +24,8 @@
     /* Dimensions */
     --chart-width: 950px;
     --chart-height: 700px;
+    --gradient-axis-width: 32px;
+    --gradient-axis-height: 366px;
     --pie-chart-width: 320px;
     --pie-chart-height: 320px;
 }
@@ -199,12 +201,24 @@ div #gradient-bar-container {
     justify-content: center;
 }
 
+div #gradient-axis-container {
+    height: var(--chart-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 div #gradient-bar {
-    height: 50%;
     width: 8px;
+    height: 50%;
     border-radius: 4px;
     overflow: hidden;
     border: 0.5px solid var(--dark-grey-color);
+}
+
+div #gradient-axis {
+    width: var(--gradient-axis-width);
+    height: var(--gradient-axis-height);
 }
 
 div #bottom-bar {
@@ -297,6 +311,19 @@ div #main-bar {
     shape-rendering: crispEdges;
 } 
 .axis text {
+    font-family: sans-serif;
+    font-size: var(--axis-font-size);
+    fill: var(--slate-color);
+}
+.gaxis path {
+    display: none;
+}
+.gaxis line {
+    fill: none;
+    stroke: var(--slate-color);
+    shape-rendering: crispEdges;
+}
+.gaxis text {
     font-family: sans-serif;
     font-size: var(--axis-font-size);
     fill: var(--slate-color);

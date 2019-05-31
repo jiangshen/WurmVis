@@ -83,10 +83,13 @@
                 </div>
                 <div id='gradient-bar-container'>
                     <div id='gradient-bar'>
-                            <svg id='gradient-fill-container' class='fill'>
-                                <rect id='gradient-fill' class='fill' style='fill: url("#linear-gradient");'></rect>
-                            </svg>
+                        <svg id='gradient-fill-container' class='fill'>
+                            <rect id='gradient-fill' class='fill' style='fill: url("#linear-gradient");'></rect>
+                        </svg>
                     </div>
+                </div>
+                <div id='gradient-axis-container'>
+                    <svg id='gradient-axis'></svg>
                 </div>
             </div>
             
@@ -133,11 +136,21 @@
                 </div>
                 <div class='containerV pane hidden' id='scatter-selection-pane'>
                     <div class='containerH justify-space vertical-center'>
-                        <span class='infobox-text'>Selection</span>
+                        <span class='infobox-text'>Selected</span>
                         <span class='bubble medium' id='infobox-selection-amount'>None</span>
                     </div>
                     <hr>
+                    <div class='containerH justify-space vertical-center'>
+                        <span class='infobox-text'>Rest</span>
+                        <span class='bubble medium' id='infobox-rest-amount'>None</span>
+                    </div>
+                    <hr>
                     <svg id='pie-chart'></svg>
+                    <hr>
+                    <div class='containerH justify-space vertical-center'>
+                        <span class='infobox-text'>Rest</span>
+                        <span class='bubble medium' id='infobox-rest-amount'>None</span>
+                    </div>
                 </div>
             </div>
         </div>
