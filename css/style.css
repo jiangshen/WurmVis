@@ -7,6 +7,7 @@
     --topbar-grey-color: #4A5764;
     --white-color: #FFFFFF;
     --red-color: #F44336;
+    --blue-color: #3498DB;
     --slate-color: #5d6d7e;
     --slate-color-faint: #5D6D7E80;
     --green-color: #4CAF50;
@@ -26,8 +27,8 @@
     --chart-height: 700px;
     --gradient-axis-width: 32px;
     --gradient-axis-height: 366px;
-    --pie-chart-width: 320px;
-    --pie-chart-height: 320px;
+    --pie-chart-width: 318px;
+    --pie-chart-height: 318px;
 }
 
 body {
@@ -109,6 +110,10 @@ body {
     padding-right: 4px;
     padding-top: 2px;
     padding-bottom: 2px;
+}
+
+.bubble-purple {
+    background-color: var(--purple-color);
 }
 
 .faint {

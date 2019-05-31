@@ -18,13 +18,13 @@
                     <div id="scatter-bar">
                         <span class='separator-big'>|</span>
                         <select class='select-css' id="genderContainer">
-                            <option value="none">All Gender</option>
+                            <option value="all">All Gender</option>
                         </select>
                         <select class='select-css' id="environmentContainer">
-                            <option value="none">All Environment</option>
+                            <option value="all">All Environment</option>
                         </select>
                         <select class='select-css' id="optogeneticsContainer">
-                            <option value="none">All Optogenetics</option>
+                            <option value="all">All Optogenetics</option>
                         </select>
                         <button class="button button_violet" onclick="clearButtonCall()">Clear Pick</button>
                     </div>
@@ -148,8 +148,9 @@
                     <svg id='pie-chart'></svg>
                     <hr>
                     <div class='containerH justify-space vertical-center'>
-                        <span class='infobox-text'>Rest</span>
-                        <span class='bubble medium' id='infobox-rest-amount'>None</span>
+                        <span id='bubble-gender' class='bubble medium'>All</span>
+                        <span id='bubble-environment' class='bubble medium'>All</span>
+                        <span id='bubble-optogenetics' class='bubble medium'>All</span>
                     </div>
                 </div>
             </div>

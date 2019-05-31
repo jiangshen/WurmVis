@@ -98,9 +98,20 @@ function selectionCall() {
     var e = environmentContainer.property('value');
     var o = optogeneticsContainer.property('value');
 
-    g = g == 'none' ? '' : '.' + g;
-    e = e == 'none' ? '' : '.' + e;
-    o = o == 'none' ? '' : '.' + o;
+    bubbleGender.text(formatText(g));
+    bubbleEnvironment.text(formatText(e));
+    bubbleOptogenetics.text(formatText(o));
+
+    bubbleGender.classed('bubble-purple', false);
+    bubbleEnvironment.classed('bubble-purple', false);
+    bubbleOptogenetics.classed('bubble-purple', false);
+    if (g != 'all') bubbleGender.classed('bubble-purple', true);
+    if (e != 'all') bubbleEnvironment.classed('bubble-purple', true);
+    if (o != 'all') bubbleOptogenetics.classed('bubble-purple', true);
+
+    g = g == 'all' ? '' : '.' + g;
+    e = e == 'all' ? '' : '.' + e;
+    o = o == 'all' ? '' : '.' + o;
     var selection = g + e + o;
 
     if (selection != '') {
@@ -120,6 +131,7 @@ function selectionCall() {
         d3.select('#infobox-selection-amount').text(selectedPercent + '%');
         d3.select('#infobox-rest-amount').text((100.0 - selectedPercent) + '%');
         drawPie(selectedPercent, 100 - selectedPercent);
+
         selected.transition()
             .ease(d3.easePoly)
             .duration(200)
