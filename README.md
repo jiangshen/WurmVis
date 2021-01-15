@@ -1,6 +1,6 @@
 # WurmVis
 
-> Exploring novel ways to display big datasets with D3
+This project explores novel ways to display rich and interactive content from big datasets with D3.js. The datasets are taken from the video captures of c.elegans worm behavior.
 
 ## Features
 
