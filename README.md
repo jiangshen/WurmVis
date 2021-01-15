@@ -2,6 +2,8 @@
 
 > Exploring novel ways to display big datasets with D3
 
+This project explores using D3 to display rich and interactive content for datasets taken from the videos captures of c.elegans worm behavior.
+
 ## Features
 
 ### Scatter plot
