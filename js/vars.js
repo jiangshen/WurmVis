@@ -2,7 +2,7 @@
  * Data Path
  */
 /* This is the only data input the app needs, load your entire dataset here */
-const DATA_PATH = "/data/all.json";
+const DATA_PATH = "/data/smaller.json";
 
 /**
  * Sampling 

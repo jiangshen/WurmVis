@@ -1,8 +1,9 @@
 /* Init with scatterplot */
-d3.json(DATA_PATH, function(d) {
+d3.json(DATA_PATH, function(err, d) {
     /**
      * Populate data and attributes
      */
+    if (err) alert("Data error: " + err);
     all_data = d;
     sampled_data = sample(d, SAMPLE_SIZE);
     SAMPLED_XMIN = d3.min(sampled_data, function(d) { return d.x });

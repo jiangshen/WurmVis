@@ -26,8 +26,6 @@ function formatText(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-
-
 /**
  * Generates a valid HTML YouTube Video Embed
  * @param {number} w Video Width
